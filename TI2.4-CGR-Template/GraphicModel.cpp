@@ -185,6 +185,10 @@ void GraphicModel::draw()
 	for (auto& group : groups)
 	{
 		//  set material texture, if available
+		if (materials[group->materialIndex]->texture != nullptr)
+		{
+			materials[group->materialIndex]->texture->bind();
+		}
 		//  set material color, if available
 		for (auto& face : group->faces)
 		{

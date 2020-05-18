@@ -5,7 +5,7 @@
 
 class Texture
 {
-	GLuint id;
+	GLuint id = -1;
 public:
 	Texture(const std::string& fileName);
 	void bind();
