@@ -1,14 +1,27 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <iostream>
+#include <glm/gtc/matrix_transform.hpp>
+#include <iostream>
+#include <opencv2/opencv.hpp>
+#include "opencv2/imgproc/imgproc.hpp" 
+#include "opencv2/highgui/highgui.hpp"
+#include "blobdetectionavans.h"
+#include "stb_image.h"
+
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include "tigl.h"
 #include <glm/gtc/matrix_transform.hpp>
+using namespace cv;
 using tigl::Vertex;
 
 #pragma comment(lib, "glfw3.lib")
 #pragma comment(lib, "glew32s.lib")
 #pragma comment(lib, "opengl32.lib")
 
-GLFWwindow* window;
+GLFWwindow* graphicsWindow;
+GLFWwindow* visionWindow;
 
 void init();
 void update();
@@ -18,23 +31,20 @@ int main(void)
 {
     if (!glfwInit())
         throw "Could not initialize glwf";
-    window = glfwCreateWindow(1400, 800, "Hello World", NULL, NULL);
-    if (!window)
-    {
-        glfwTerminate();
-        throw "Could not initialize glwf";
-    }
-    glfwMakeContextCurrent(window);
+    visionWindow = glfwCreateWindow(1400, 800, "Vision window", NULL, NULL);
+    graphicsWindow = glfwCreateWindow(1400, 800, "Graphics window", NULL, NULL);
+    
+    glfwMakeContextCurrent(graphicsWindow);
 
     tigl::init();
 
     init();
 
-	while (!glfwWindowShouldClose(window))
+	while (!glfwWindowShouldClose(graphicsWindow))
 	{
 		update();
 		draw();
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(graphicsWindow);
 		glfwPollEvents();
 	}
 
@@ -47,7 +57,7 @@ int main(void)
 
 void init()
 {
-    glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+    glfwSetKeyCallback(graphicsWindow, [](GLFWwindow* window, int key, int scancode, int action, int mods)
     {
         if (key == GLFW_KEY_ESCAPE)
             glfwSetWindowShouldClose(window, true);
