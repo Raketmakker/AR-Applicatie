@@ -1,2 +1,9 @@
-﻿  main.cpp
+﻿  GraphicModel.cpp
+C:\Users\Jaspe\Documents\_Github\AR-Applicatie\TI2.4-CGR-Template\GraphicModel.cpp(166,37): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  Texture.cpp
+  main.cpp
+  Generating Code...
+MSVCRTD.lib(initializers.obj) : warning LNK4098: defaultlib 'msvcrt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
+MSVCRTD.lib(initializers.obj) : warning LNK4098: defaultlib 'libcmt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
+glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'C:\Users\Jaspe\Documents\_Github\AR-Applicatie\TI2.4-CGR-Template\x64\Debug\vc120.pdb'; linking object as if no debug info
   CGR Template.vcxproj -> C:\Users\Jaspe\Documents\_Github\AR-Applicatie\TI2.4-CGR-Template\x64\Debug\CGR Template.exe
