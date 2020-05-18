@@ -2,14 +2,14 @@
 
 #include <GL/glew.h>
 #include <glm/glm.hpp>
-
+#include "DrawComponent.h"
 #include <string>
 #include <vector>
 #include <list>
 
 class Texture;
 
-class GraphicModel
+class GraphicModel : public DrawComponent
 {
 private:
 	class Vertex
@@ -53,6 +53,6 @@ public:
 	GraphicModel(const std::string& filename);
 	~GraphicModel(void);
 
-	void draw();
+	virtual void draw() override;
 };
 
