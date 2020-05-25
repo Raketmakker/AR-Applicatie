@@ -14,6 +14,8 @@
 #include <GLFW/glfw3.h>
 #include "tigl.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include "Component.h";
+#include "FpsCam.h"
 #include "GameObject.h"
 #include "GraphicModel.h"
 using namespace cv;
@@ -26,6 +28,7 @@ using tigl::Vertex;
 GLFWwindow* graphicsWindow;
 GLFWwindow* visionWindow;
 std::list<GameObject*> gameObjects;
+FpsCam* cam;
 
 void init();
 void update();
@@ -54,7 +57,6 @@ int main(void)
 
 	glfwTerminate();
 
-
     return 0;
 }
 
@@ -67,22 +69,18 @@ void init()
             glfwSetWindowShouldClose(window, true);
     });
     glEnable(GL_DEPTH_TEST);
+    cam = new FpsCam(graphicsWindow);
 
-    
-    GameObject* car = new GameObject();
-    car->position = glm::vec3(0, 0, 0);
-    car->addComponent(new GraphicModel("models/car/honda_jazz.obj"));
-    gameObjects.push_back(car);
     GameObject* ship = new GameObject();
-    ship->position = glm::vec3(0, 0, 50);
-    ship->addComponent(new GraphicModel("models/ship/shipA_OBJ.obj"));
+    ship->position = glm::vec3(0, 0, 0);
+    ship->addComponent(new GraphicModel("models/Sloep2/Sloep.obj"));
+    //ship->addComponent(new GraphicModel("models/Car/honda_jazz.obj"));
     gameObjects.push_back(ship);
 }
 
-
 void update()
 {
-
+    cam->update(graphicsWindow);
 }
 
 void draw()
@@ -92,10 +90,10 @@ void draw()
     
     int viewport[4];
     glGetIntegerv(GL_VIEWPORT, viewport);
-    glm::mat4 projection = glm::perspective(glm::radians(110.0f), viewport[2] / (float)viewport[3], 0.01f, 1000.0f);
+    glm::mat4 projection = glm::perspective(glm::radians(100.0f), viewport[2] / (float)viewport[3], 0.01f, 1000.0f);
 
     tigl::shader->setProjectionMatrix(projection);
-    tigl::shader->setViewMatrix(glm::lookAt(glm::vec3(0, 50, 100), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0)));
+    tigl::shader->setViewMatrix(cam->getMatrix());
     tigl::shader->setModelMatrix(glm::mat4(1.0f));
 
     tigl::shader->enableTexture(true);
