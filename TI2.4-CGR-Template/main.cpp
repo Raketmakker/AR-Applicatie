@@ -73,7 +73,7 @@ void init()
 
     GameObject* ship = new GameObject();
     ship->position = glm::vec3(0, -100, 0);
-    ship->addComponent(new GraphicModel("models/Ship3/Ship3.obj"));
+    ship->addComponent(new GraphicModel("models/Ship2/Ship2.obj"));
     gameObjects.push_back(ship);
 }
 
