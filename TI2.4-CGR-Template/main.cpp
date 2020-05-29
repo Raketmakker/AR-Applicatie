@@ -72,9 +72,8 @@ void init()
     cam = new FpsCam(graphicsWindow);
 
     GameObject* ship = new GameObject();
-    ship->position = glm::vec3(0, 0, 0);
-    ship->addComponent(new GraphicModel("models/Sloep2/Sloep.obj"));
-    //ship->addComponent(new GraphicModel("models/Car/honda_jazz.obj"));
+    ship->position = glm::vec3(0, -100, 0);
+    ship->addComponent(new GraphicModel("models/Ship5/Ship5.obj"));
     gameObjects.push_back(ship);
 }
 
