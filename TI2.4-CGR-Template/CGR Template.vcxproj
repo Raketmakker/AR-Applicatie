@@ -164,6 +164,8 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GraphicModel.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Pane.cpp" />
+    <ClCompile Include="PositionTool.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="tigl.cpp" />
   </ItemGroup>
@@ -174,6 +176,8 @@
     <ClInclude Include="FpsCam.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GraphicModel.h" />
+    <ClInclude Include="Pane.h" />
+    <ClInclude Include="PositionTool.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="tigl.h" />

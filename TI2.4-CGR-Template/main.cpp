@@ -18,6 +18,8 @@
 #include "FpsCam.h"
 #include "GameObject.h"
 #include "GraphicModel.h"
+#include "Pane.h"
+#include "PositionTool.h"
 using namespace cv;
 using tigl::Vertex;
 
@@ -72,14 +74,41 @@ void init()
     cam = new FpsCam(graphicsWindow);
 
     GameObject* ship = new GameObject();
+    //ship->position = glm::vec3(-200, -100, 0);
+    //ship->addComponent(new GraphicModel("models/Ship2/Ship2.obj"));
+    //gameObjects.push_back(ship);
+
+    ship = new GameObject();
     ship->position = glm::vec3(0, -100, 0);
-    ship->addComponent(new GraphicModel("models/Ship2/Ship2.obj"));
+    ship->addComponent(new GraphicModel("models/Ship3/Ship3.obj"));
     gameObjects.push_back(ship);
+
+    ship = new GameObject();
+    ship->position = glm::vec3(50, -100, 0);
+    ship->addComponent(new GraphicModel("models/Ship4/Ship4.obj"));
+    gameObjects.push_back(ship);
+
+    ship = new GameObject();
+    ship->position = glm::vec3(100, -100, 0);
+    ship->addComponent(new GraphicModel("models/Ship5/Ship5.obj"));
+    gameObjects.push_back(ship);
+
+    GameObject* floor = new GameObject();
+    floor->position = glm::vec3(15.2f, -90.0f, 45.0f);
+    floor->addComponent(new Pane(225, "pictures/ZeeslagGrid.png", true));
+    floor->addComponent(new PositionTool(graphicsWindow, 0.01f));
+    gameObjects.push_back(floor);
 }
 
 void update()
 {
+    float time = glfwGetTime();
+    static float lastTime;
+    float deltaTime = time - lastTime;
+    lastTime = time;
     cam->update(graphicsWindow);
+    for (auto& o : gameObjects)
+        o->update(time);
 }
 
 void draw()

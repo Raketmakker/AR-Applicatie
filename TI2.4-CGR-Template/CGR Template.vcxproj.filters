@@ -13,62 +13,80 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\GraphicsModule">
+      <UniqueIdentifier>{355a6664-7f34-4b43-a24f-58dbec64e724}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GraphicsModuleHeaders">
+      <UniqueIdentifier>{19a3d4b6-a7b1-40f7-bbd6-29c0a835dcd7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="tigl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="blobdetectionavans.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Component.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GraphicsModule</Filter>
     </ClCompile>
     <ClCompile Include="DrawComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GraphicsModule</Filter>
     </ClCompile>
     <ClCompile Include="FpsCam.cpp">
+      <Filter>Source Files\GraphicsModule</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\GraphicsModule</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicModel.cpp">
+      <Filter>Source Files\GraphicsModule</Filter>
+    </ClCompile>
+    <ClCompile Include="Pane.cpp">
+      <Filter>Source Files\GraphicsModule</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\GraphicsModule</Filter>
+    </ClCompile>
+    <ClCompile Include="tigl.cpp">
+      <Filter>Source Files\GraphicsModule</Filter>
+    </ClCompile>
+    <ClCompile Include="PositionTool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="tigl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="stb_image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="blobdetectionavans.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GraphicModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Component.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\GraphicsModuleHeaders</Filter>
     </ClInclude>
     <ClInclude Include="DrawComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\GraphicsModuleHeaders</Filter>
     </ClInclude>
     <ClInclude Include="FpsCam.h">
+      <Filter>Header Files\GraphicsModuleHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files\GraphicsModuleHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicModel.h">
+      <Filter>Header Files\GraphicsModuleHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Pane.h">
+      <Filter>Header Files\GraphicsModuleHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Header Files\GraphicsModuleHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\GraphicsModuleHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="tigl.h">
+      <Filter>Header Files\GraphicsModuleHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="PositionTool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
