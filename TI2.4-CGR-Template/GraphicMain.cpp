@@ -16,25 +16,30 @@ GraphicMain::GraphicMain(GLFWwindow* window)
 void GraphicMain::init()
 {
     this->cam = new FpsCam(window);
-    drawGrid();
+    drawGrid(0, 0);
+    drawGrid(1, 0);
 }
 
 //Draws the grid where the boats in sail
-void GraphicMain::drawGrid()
+void GraphicMain::drawGrid(int offsetX, int offsetZ)
 {
     GameObject* line;
 
     for (size_t x = 0; x <= gridSize; x++)
     {
         line = new GameObject();
-        line->addComponent(new Line(glm::vec3(x * tileSize, gridHeight, 0), glm::vec3(x * tileSize, gridHeight, gridSize * tileSize), glm::vec4(0, 0, 0, 0), 3.0f));
+        line->addComponent(new Line(glm::vec3(x * tileSize + offsetX * (gridSize * tileSize + tileSize), gridHeight, offsetZ * (gridSize * tileSize + tileSize)),
+            glm::vec3(x * tileSize + offsetX * (gridSize * tileSize + tileSize), gridHeight, gridSize * tileSize + offsetZ * (gridSize * tileSize + tileSize)),
+            glm::vec4(0, 0, 0, 0), 3.0f));
         gameObjects.push_back(line);
     }
 
     for (size_t z = 0; z <= gridSize; z++)
     {
         line = new GameObject();
-        line->addComponent(new Line(glm::vec3(0, gridHeight, z * tileSize), glm::vec3(gridSize * tileSize, gridHeight, z * tileSize), glm::vec4(0, 0, 0, 0), 3.0f));
+        line->addComponent(new Line(glm::vec3(offsetX * (gridSize * tileSize + tileSize), gridHeight, z * tileSize + offsetZ * (gridSize * tileSize + tileSize)),
+            glm::vec3(gridSize * tileSize + offsetX * (gridSize * tileSize + tileSize), gridHeight, z * tileSize + offsetZ * (gridSize * tileSize + tileSize)),
+            glm::vec4(0, 0, 0, 0), 3.0f));
         gameObjects.push_back(line);
     }
 }
@@ -67,7 +72,7 @@ void GraphicMain::draw()
         o->draw();
 }
 
-void GraphicMain::placeBoat(int x, int y, int length)
+GameObject* GraphicMain::placeBoat(int x, int y, int length)
 {
     GameObject* ship = new GameObject();
     ship->rotation.y = glm::radians(90.0f);
@@ -94,4 +99,62 @@ void GraphicMain::placeBoat(int x, int y, int length)
         break;
     }
     this->gameObjects.push_back(ship);
+    return ship;
+}
+
+void GraphicMain::firePin(int x, int z, int offsetX, int offsetZ, bool hit)
+{
+    GameObject* pin = new GameObject();
+    pin->position = glm::vec3(x * tileSize + offsetX * gridSize * tileSize + tileSize / 2 + tileSize * offsetX,
+        gridHeight + tileSize / 2, z * tileSize + offsetZ * gridSize * tileSize + tileSize / 2 + tileSize * offsetZ);
+    if (hit)
+    {
+        pin->addComponent(new Cube(tileSize * pinSize, glm::vec4(1, 0, 0, 1)));
+    }
+    else
+    {
+        pin->addComponent(new Cube(tileSize * pinSize, glm::vec4(0, 0, 1, 1)));
+    }
+    gameObjects.push_back(pin);
+}
+
+void GraphicMain::test()
+{
+    //Test the boats
+    for (size_t i = 2; i < 6; i++)
+    {
+        placeBoat(i, i, i);
+    }
+
+    //Test the pins on grid 0, 0
+    for (size_t x = 0; x < gridSize; x++)
+    {
+        for (size_t z = 0; z < gridSize; z++)
+        {
+            if ((z + x) % 2 == 0)
+            {
+                firePin(x, z, 0, 0, true);
+            }
+            else
+            {
+                firePin(x, z, 0, 0, false);
+            }
+        }
+    }
+    
+    //Test the pins on grid 1, 1
+    for (size_t x = 0; x < gridSize; x++)
+    {
+        for (size_t z = 0; z < gridSize; z++)
+        {
+            if ((z + x) % 2 == 0)
+            {
+                firePin(x, z, 1, 0, false);
+            }
+            else
+            {
+                firePin(x, z, 1, 0, true);
+            }
+        }
+    }
 }

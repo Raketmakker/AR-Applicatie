@@ -34,6 +34,7 @@ int main(void)
 
     graphicMain = new GraphicMain(graphicsWindow);
     graphicMain->init();
+    //graphicMain->test();
 
 	while (!glfwWindowShouldClose(graphicsWindow))
 	{
