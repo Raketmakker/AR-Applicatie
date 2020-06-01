@@ -157,21 +157,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Downloads\wk4_components\Component.cpp" />
-    <ClCompile Include="..\..\..\..\Downloads\wk4_components\DrawComponent.cpp" />
-    <ClCompile Include="..\..\..\..\Downloads\wk4_components\GameObject.cpp" />
     <ClCompile Include="blobdetectionavans.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="DrawComponent.cpp" />
+    <ClCompile Include="FpsCam.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GraphicMain.cpp" />
     <ClCompile Include="GraphicModel.cpp" />
+    <ClCompile Include="Line.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Pane.cpp" />
+    <ClCompile Include="PositionTool.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="tigl.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Downloads\wk4_components\Component.h" />
-    <ClInclude Include="..\..\..\..\Downloads\wk4_components\DrawComponent.h" />
-    <ClInclude Include="..\..\..\..\Downloads\wk4_components\GameObject.h" />
     <ClInclude Include="blobdetectionavans.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="DrawComponent.h" />
+    <ClInclude Include="FpsCam.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GraphicMain.h" />
     <ClInclude Include="GraphicModel.h" />
+    <ClInclude Include="Line.h" />
+    <ClInclude Include="Pane.h" />
+    <ClInclude Include="PositionTool.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="tigl.h" />
