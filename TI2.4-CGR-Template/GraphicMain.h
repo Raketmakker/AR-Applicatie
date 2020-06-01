@@ -6,6 +6,7 @@
 #include "FpsCam.h"
 #include "Line.h"
 #include "GraphicModel.h"
+#include <iostream>
 
 class GraphicMain
 {

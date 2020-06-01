@@ -17,11 +17,6 @@ void GraphicMain::init()
 {
     this->cam = new FpsCam(window);
     drawGrid();
-
-    for (size_t i = 2; i <= 5; i++)
-    {
-        placeBoat(i, i, i);
-    }
 }
 
 //Draws the grid where the boats in sail
@@ -95,7 +90,8 @@ void GraphicMain::placeBoat(int x, int y, int length)
         ship->addComponent(new GraphicModel("models/Ship5/Ship5.obj"));
         break;
     default:
+        std::cout << "Given ship length not valid! - GraphicMain::placeBoat" << std::endl;
         break;
     }
-    gameObjects.push_back(ship);
+    this->gameObjects.push_back(ship);
 }
