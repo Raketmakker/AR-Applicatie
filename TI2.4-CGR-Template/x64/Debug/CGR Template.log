@@ -1,6 +1,5 @@
-﻿  main.cpp
-C:\Users\Jaspe\Documents\_Github\AR-Applicatie\TI2.4-CGR-Template\main.cpp(18,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\Jaspe\Documents\_Github\AR-Applicatie\TI2.4-CGR-Template\Pane.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\Jaspe\Documents\_Github\AR-Applicatie\TI2.4-CGR-Template\PositionTool.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\Jaspe\Documents\_Github\AR-Applicatie\TI2.4-CGR-Template\main.cpp(111,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+﻿  GraphicMain.cpp
+  main.cpp
+C:\Users\Jaspe\Documents\_Github\AR-Applicatie\TI2.4-CGR-Template\main.cpp(58,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
   CGR Template.vcxproj -> C:\Users\Jaspe\Documents\_Github\AR-Applicatie\TI2.4-CGR-Template\x64\Debug\CGR Template.exe

@@ -162,6 +162,7 @@
     <ClCompile Include="DrawComponent.cpp" />
     <ClCompile Include="FpsCam.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GraphicMain.cpp" />
     <ClCompile Include="GraphicModel.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="main.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="DrawComponent.h" />
     <ClInclude Include="FpsCam.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GraphicMain.h" />
     <ClInclude Include="GraphicModel.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="Pane.h" />
