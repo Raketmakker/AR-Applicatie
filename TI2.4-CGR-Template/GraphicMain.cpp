@@ -17,6 +17,11 @@ void GraphicMain::init()
 {
     this->cam = new FpsCam(window);
     drawGrid();
+
+    for (size_t i = 2; i <= 5; i++)
+    {
+        placeBoat(i, i, i);
+    }
 }
 
 //Draws the grid where the boats in sail
@@ -27,14 +32,14 @@ void GraphicMain::drawGrid()
     for (size_t x = 0; x <= gridSize; x++)
     {
         line = new GameObject();
-        line->addComponent(new Line(glm::vec3(x * tileSize, -90, 0), glm::vec3(x * tileSize, -90, gridSize * tileSize), glm::vec4(0, 0, 0, 0), 3.0f));
+        line->addComponent(new Line(glm::vec3(x * tileSize, gridHeight, 0), glm::vec3(x * tileSize, gridHeight, gridSize * tileSize), glm::vec4(0, 0, 0, 0), 3.0f));
         gameObjects.push_back(line);
     }
 
     for (size_t z = 0; z <= gridSize; z++)
     {
         line = new GameObject();
-        line->addComponent(new Line(glm::vec3(0, -90, z * tileSize), glm::vec3(gridSize * tileSize, -90, z * tileSize), glm::vec4(0, 0, 0, 0), 3.0f));
+        line->addComponent(new Line(glm::vec3(0, gridHeight, z * tileSize), glm::vec3(gridSize * tileSize, gridHeight, z * tileSize), glm::vec4(0, 0, 0, 0), 3.0f));
         gameObjects.push_back(line);
     }
 }
@@ -67,7 +72,30 @@ void GraphicMain::draw()
         o->draw();
 }
 
-void GraphicMain::placeBoat(int x, int y)
+void GraphicMain::placeBoat(int x, int y, int length)
 {
-
+    GameObject* ship = new GameObject();
+    ship->rotation.y = glm::radians(90.0f);
+    switch (length)
+    {
+    case 2:
+        ship->position = glm::vec3(x * tileSize + (float)length / 2.0f * tileSize, 0, y * tileSize + 0.5f * tileSize) + shipOffset;
+        ship->addComponent(new GraphicModel("models/Ship2/Ship2.obj"));
+        break;
+    case 3:
+        ship->position = glm::vec3(x * tileSize + (float)length / 2.0f * tileSize, 0, y * tileSize + 0.5f * tileSize) + shipOffset;
+        ship->addComponent(new GraphicModel("models/Ship3/Ship3.obj"));
+        break;
+    case 4:
+        ship->position = glm::vec3(x * tileSize + (float)length / 2.0f * tileSize, 0, y * tileSize + 0.5f * tileSize) + shipOffset;
+        ship->addComponent(new GraphicModel("models/Ship4/Ship4.obj"));
+        break;
+    case 5:
+        ship->position = glm::vec3(x * tileSize + (float)length / 2.0f * tileSize, 0, y * tileSize + 0.5f * tileSize) + shipOffset;
+        ship->addComponent(new GraphicModel("models/Ship5/Ship5.obj"));
+        break;
+    default:
+        break;
+    }
+    gameObjects.push_back(ship);
 }
