@@ -17,9 +17,9 @@ void PositionTool::update(float deltaTime)
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		move(-90, deltaTime * speed);
 	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-		rotate(-deltaTime * speed);
+		rotate(-deltaTime * speed * 0.1f);
 	if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-		rotate(deltaTime * speed);
+		rotate(deltaTime * speed * 0.1f);
 
 	std::cout << "Position X: " << gameObject->position.x << " Z: " << gameObject->position.z << " Rotation: " << rotation << std::endl;
 }

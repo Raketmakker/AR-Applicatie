@@ -54,6 +54,9 @@
     <ClCompile Include="PositionTool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>Source Files\GraphicsModule</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="blobdetectionavans.h">
@@ -88,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="PositionTool.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>Header Files\GraphicsModuleHeaders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

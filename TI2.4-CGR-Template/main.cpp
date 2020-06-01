@@ -9,7 +9,8 @@
 #include "blobdetectionavans.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
-
+#include <math.h>
+#include "Line.h"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "tigl.h"
@@ -93,11 +94,16 @@ void init()
     ship->addComponent(new GraphicModel("models/Ship5/Ship5.obj"));
     gameObjects.push_back(ship);
 
-    GameObject* floor = new GameObject();
-    floor->position = glm::vec3(15.2f, -90.0f, 45.0f);
-    floor->addComponent(new Pane(225, "pictures/ZeeslagGrid.png", true));
-    floor->addComponent(new PositionTool(graphicsWindow, 0.01f));
-    gameObjects.push_back(floor);
+    //GameObject* floor = new GameObject();
+    //floor->position = glm::vec3(83.9294f, -90.0f, 67.0324f);
+    //floor->rotation.y = glm::radians(90.0f);// 1.55452f;
+    //floor->addComponent(new Pane(225, "pictures/ZeeslagGrid.png", true));
+    //floor->addComponent(new PositionTool(graphicsWindow, 0.01f));
+    //gameObjects.push_back(floor);
+    
+    GameObject* line = new GameObject();
+    line->addComponent(new Line(glm::vec3(0, -90, 0), glm::vec3(00, -90, 100), glm::vec4(0, 0, 0, 0), 10.0f));
+    gameObjects.push_back(line);
 }
 
 void update()
