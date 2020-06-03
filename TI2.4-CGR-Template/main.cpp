@@ -76,16 +76,6 @@ void init()
             glfwSetWindowShouldClose(window, true);
     });
     glEnable(GL_DEPTH_TEST);
-
-    
-    GameObject* car = new GameObject();
-    car->position = glm::vec3(0, 0, 0);
-    car->addComponent(new GraphicModel("models/car/honda_jazz.obj"));
-    gameObjects.push_back(car);
-    GameObject* ship = new GameObject();
-    ship->position = glm::vec3(0, 0, 50);
-    ship->addComponent(new GraphicModel("models/ship/shipA_OBJ.obj"));
-    gameObjects.push_back(ship);
 }
 
 

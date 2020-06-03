@@ -141,12 +141,12 @@ bool VisionModule::_HandleSelection(Point2d selection)
     //Check if the selection is within the grid
     if (selection.x < _gridStart.x || selection.x > _gridStart.x + _gridWidth)
     {
-        cout << "VisionModule::HandleSelection: Selection not in grid";
+        cout << "VisionModule::HandleSelection: Selection not in grid\n";
         return false;
     }
     if (selection.y < _gridStart.y || selection.y > _gridStart.y + _gridHeigth)
     {
-        cout << "VisionModule::HandleSelection: Selection not in grid";
+        cout << "VisionModule::HandleSelection: Selection not in grid\n";
         return false;
     }
 
@@ -216,11 +216,12 @@ void VisionModule::_VisionThread()
         }
         else
         {
-            cout << "Cannot read a frame from video stream" << endl;
+            cout << "Cannot read a frame from video stream\n";
         }
         
-        //Sleep for 50ms to allow other threads to execute
-        //this_thread::sleep_for(10ms);
+        //Sleep for a time to allow other threads to execute
+        waitKey(1);
+        this_thread::sleep_for(10ms);
     }
 
     // Release resources

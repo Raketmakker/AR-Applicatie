@@ -101,9 +101,9 @@ D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(1
           ]
 MSVCRT.lib(initializers.obj) : warning LNK4098: defaultlib 'libcmt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
   Generating code
-  3 of 1329 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+  3 of 719 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    10 functions had inline decision re-evaluated but remain unchanged
+    1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\x64\Release\vc120.pdb'; linking object as if no debug info
   CGR Template.vcxproj -> D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\x64\Release\CGR Template.exe

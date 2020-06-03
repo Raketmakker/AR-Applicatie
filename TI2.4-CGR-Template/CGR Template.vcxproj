@@ -157,7 +157,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="blobdetectionavans.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="DrawComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -168,7 +167,6 @@
     <ClCompile Include="VisionModule.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="blobdetectionavans.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="DrawComponent.h" />
     <ClInclude Include="GameObject.h" />
