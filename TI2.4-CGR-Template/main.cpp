@@ -16,6 +16,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "GameObject.h"
 #include "GraphicModel.h"
+#include "VisionModule.h"
+
 using namespace cv;
 using tigl::Vertex;
 
@@ -31,8 +33,16 @@ void init();
 void update();
 void draw();
 
+void VisionCallback(int x, int y)
+{
+    cout << "Selection is on (" << x << "," << y << ")\n";
+}
+
 int main(void)
 {
+    VisionModule mod(VisionCallback);
+    mod.start();
+
     if (!glfwInit())
         throw "Could not initialize glwf";
     visionWindow = glfwCreateWindow(1400, 800, "Vision window", NULL, NULL);

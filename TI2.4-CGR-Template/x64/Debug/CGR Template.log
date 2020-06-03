@@ -1,2 +1,102 @@
-﻿  main.cpp
-  CGR Template.vcxproj -> C:\Users\Jaspe\Documents\_Github\AR-Applicatie\TI2.4-CGR-Template\x64\Debug\CGR Template.exe
+﻿  VisionModule.cpp
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(133,47): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(133,30): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(133,88): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(133,71): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(134,47): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(134,30): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(134,88): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(134,71): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(136,34): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(136,31): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(149,21): warning C4244: 'initializing': conversion from '_Tp' to 'float', possible loss of data
+          with
+          [
+              _Tp=double
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(149,46): warning C4244: 'initializing': conversion from '_Tp' to 'float', possible loss of data
+          with
+          [
+              _Tp=double
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(150,21): warning C4244: 'initializing': conversion from '_Tp' to 'float', possible loss of data
+          with
+          [
+              _Tp=double
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(150,46): warning C4244: 'initializing': conversion from '_Tp' to 'float', possible loss of data
+          with
+          [
+              _Tp=double
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(156,31): warning C4244: '=': conversion from '_Tp' to 'float', possible loss of data
+          with
+          [
+              _Tp=double
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(160,30): warning C4244: '=': conversion from '_Tp' to 'float', possible loss of data
+          with
+          [
+              _Tp=double
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(164,31): warning C4244: '=': conversion from '_Tp' to 'float', possible loss of data
+          with
+          [
+              _Tp=double
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(168,30): warning C4244: '=': conversion from '_Tp' to 'float', possible loss of data
+          with
+          [
+              _Tp=double
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(201,20): warning C4244: 'initializing': conversion from '_Tp' to 'int', possible loss of data
+          with
+          [
+              _Tp=double
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(202,20): warning C4244: 'initializing': conversion from '_Tp' to 'int', possible loss of data
+          with
+          [
+              _Tp=double
+          ]
+  CGR Template.vcxproj -> D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\x64\Debug\CGR Template.exe

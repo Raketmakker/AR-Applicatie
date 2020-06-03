@@ -1,0 +1,119 @@
+﻿  blobdetectionavans.cpp
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\blobdetectionavans.cpp(143,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\blobdetectionavans.cpp(308,40): warning C4244: '=': conversion from 'double' to 'short', possible loss of data
+  Component.cpp
+  DrawComponent.cpp
+  GameObject.cpp
+  GraphicModel.cpp
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\GraphicModel.cpp(166,37): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  main.cpp
+  Texture.cpp
+  tigl.cpp
+  VisionModule.cpp
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(133,47): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(133,30): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(133,88): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(133,71): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(134,47): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(134,30): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(134,88): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(134,71): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(136,34): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(136,31): warning C4244: 'argument': conversion from 'float' to '_Tp', possible loss of data
+          with
+          [
+              _Tp=int
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(149,21): warning C4244: 'initializing': conversion from '_Tp' to 'float', possible loss of data
+          with
+          [
+              _Tp=double
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(149,46): warning C4244: 'initializing': conversion from '_Tp' to 'float', possible loss of data
+          with
+          [
+              _Tp=double
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(150,21): warning C4244: 'initializing': conversion from '_Tp' to 'float', possible loss of data
+          with
+          [
+              _Tp=double
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(150,46): warning C4244: 'initializing': conversion from '_Tp' to 'float', possible loss of data
+          with
+          [
+              _Tp=double
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(156,31): warning C4244: '=': conversion from '_Tp' to 'float', possible loss of data
+          with
+          [
+              _Tp=double
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(160,30): warning C4244: '=': conversion from '_Tp' to 'float', possible loss of data
+          with
+          [
+              _Tp=double
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(164,31): warning C4244: '=': conversion from '_Tp' to 'float', possible loss of data
+          with
+          [
+              _Tp=double
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(168,30): warning C4244: '=': conversion from '_Tp' to 'float', possible loss of data
+          with
+          [
+              _Tp=double
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(201,20): warning C4244: 'initializing': conversion from '_Tp' to 'int', possible loss of data
+          with
+          [
+              _Tp=double
+          ]
+D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\VisionModule.cpp(202,20): warning C4244: 'initializing': conversion from '_Tp' to 'int', possible loss of data
+          with
+          [
+              _Tp=double
+          ]
+MSVCRT.lib(initializers.obj) : warning LNK4098: defaultlib 'libcmt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 1290 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+glew32s.lib(glew.obj) : warning LNK4099: PDB 'vc120.pdb' was not found with 'glew32s.lib(glew.obj)' or at 'D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\x64\Release\vc120.pdb'; linking object as if no debug info
+  CGR Template.vcxproj -> D:\School\Periode_8\Proftaak\AR-Applicatie\TI2.4-CGR-Template\x64\Release\CGR Template.exe

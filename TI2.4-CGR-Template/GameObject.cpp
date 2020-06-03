@@ -12,7 +12,7 @@ GameObject::~GameObject()
 {
 }
 
-void GameObject::addComponent(Component * component)
+void GameObject::addComponent(Component* component)
 {
 	component->setGameObject(this);
 	components.push_back(component);
@@ -27,7 +27,7 @@ std::list<Component*> GameObject::getComponents()
 }
 
 
-void GameObject::draw(const glm::mat4 &parentMatrix)
+void GameObject::draw(const glm::mat4& parentMatrix)
 {
 	if (!drawComponent)
 		return;
@@ -38,13 +38,13 @@ void GameObject::draw(const glm::mat4 &parentMatrix)
 	modelMatrix = glm::rotate(modelMatrix, rotation.y, glm::vec3(0, 1, 0));
 	modelMatrix = glm::rotate(modelMatrix, rotation.z, glm::vec3(0, 0, 1));
 	modelMatrix = glm::scale(modelMatrix, scale);
-	
+
 	tigl::shader->setModelMatrix(modelMatrix);
 	drawComponent->draw();
 }
 
 void GameObject::update(float elapsedTime)
 {
-	for (auto &c : components)
+	for (auto& c : components)
 		c->update(elapsedTime);
 }
