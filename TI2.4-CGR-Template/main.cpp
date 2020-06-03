@@ -6,7 +6,6 @@
 #include <opencv2/opencv.hpp>
 #include "opencv2/imgproc/imgproc.hpp" 
 #include "opencv2/highgui/highgui.hpp"
-#include "blobdetectionavans.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
@@ -40,8 +39,8 @@ void VisionCallback(int x, int y)
 
 int main(void)
 {
-    VisionModule mod(VisionCallback);
-    mod.start();
+    VisionModule visionModule(VisionCallback);
+    visionModule.Start();
 
     if (!glfwInit())
         throw "Could not initialize glwf";
@@ -63,7 +62,7 @@ int main(void)
 	}
 
 	glfwTerminate();
-
+    visionModule.Stop();
 
     return 0;
 }

@@ -1,10 +1,14 @@
 #include "VisionModule.h"
+#include <thread>
+#include <chrono>
 
 constexpr auto KEYCODE_SPACE = 32;
 constexpr auto MARKER_SIZE = 25;
 
 using namespace cv;
 using namespace std;
+using namespace chrono_literals;
+
 int Min_Area = 1, Max_Area = 100000, thresholdValue;
 
 int cLowH = 0;
@@ -22,14 +26,14 @@ int sLowV = 19;
 int sHighV = 255;
 
 VisionModule::VisionModule(callback_function callback) noexcept :
-    callback(callback), thresholdValue(100), gridWidth(-1), gridHeigth(-1), gridStart(Point2d(-1, -1))
+    _callback(callback), _gridWidth(-1), _gridHeigth(-1), _gridStart(Point2d(-1, -1)), _isRunning(false)
 {
-    cap = cv::VideoCapture(1);  // 0 = Webcam, for the daheng camera increase the number by one until you find it
+    _cap = cv::VideoCapture(1);  // 0 = Webcam, for the daheng camera increase the number by one until you find it
 
-    if (cap.isOpened())
+    if (_cap.isOpened())
     {
-        cap.set(CV_CAP_PROP_FRAME_WIDTH, 1280);
-        cap.set(CV_CAP_PROP_FRAME_HEIGHT, 960);
+        _cap.set(CV_CAP_PROP_FRAME_WIDTH, 1280);
+        _cap.set(CV_CAP_PROP_FRAME_HEIGHT, 960);
     }
     else
     {
@@ -37,67 +41,19 @@ VisionModule::VisionModule(callback_function callback) noexcept :
     }
 }
 
-void VisionModule::start()
+void VisionModule::Start()
 {
-    sbd = SimpleBlobDetector::create();
-
-    namedWindow("Control Corners");
-    createTrackbar("LowH", "Control Corners", &cLowH, 179); //Hue (0 - 179)
-    createTrackbar("HighH", "Control Corners", &cHighH, 179);
-    createTrackbar("LowS", "Control Corners", &cLowS, 255); //Saturation (0 - 255)
-    createTrackbar("HighS", "Control Corners", &cHighS, 255);
-    createTrackbar("LowV", "Control Corners", &cLowV, 255);//Value (0 - 255)
-    createTrackbar("HighV", "Control Corners", &cHighV, 255);
-
-    namedWindow("Control Select");
-    createTrackbar("LowH", "Control Select", &sLowH, 179); //Hue (0 - 179)
-    createTrackbar("HighH", "Control Select", &sHighH, 179);
-    createTrackbar("LowS", "Control Select", &sLowS, 255); //Saturation (0 - 255)
-    createTrackbar("HighS", "Control Select", &sHighS, 255);
-    createTrackbar("LowV", "Control Select", &sLowV, 255);//Value (0 - 255)
-    createTrackbar("HighV", "Control Select", &sHighV, 255);
-
-    while (true)
-    {
-        Mat original_frame;
-        bool bSuccess = cap.read(original_frame);
-
-        if (bSuccess)   //Check if the videocapture was able te retrieve a frame
-        {
-            if (original_frame.empty())
-            {
-                std::cout << "Couldn't read frame from video stream\n";
-            }
-
-            Mat marked_frame = original_frame;
-
-            //Search for red corners
-            vector<Point2d> cornerPoints;
-            marked_frame += SearchColourBlob(original_frame, Scalar(cLowH, cLowS, cLowV), Scalar(cHighH, cHighS, cHighV), cornerPoints);
-
-            //Search for a blue selection marker
-            vector<Point2d> selectionPoints;
-            marked_frame += SearchColourBlob(original_frame, Scalar(sLowH, sLowS, sLowV), Scalar(sHighH, sHighS, sHighV), selectionPoints);
-
-            HandleCorners(cornerPoints);
-            if (selectionPoints.size() > 0)
-            {
-                HandleSelection(selectionPoints[0]);
-            }
-
-            imshow("Marked", marked_frame);
-
-        }
-        else
-        {
-            cout << "Cannot read a frame from video stream" << endl;
-        }
-
-        waitKey(30);
-    }
+    _isRunning = true;
+    std::thread visionThread(&VisionModule::_VisionThread, this);
+    visionThread.detach();
 }
 
-Mat VisionModule::SearchColourBlob(Mat sourceImage, Scalar lowerValue, Scalar upperValue, vector<Point2d>& blobs)
+void VisionModule::Stop() 
+{
+    _isRunning = false;
+}
+
+Mat VisionModule::_SearchColourBlob(Mat sourceImage, Scalar lowerValue, Scalar upperValue, vector<Point2d>& blobs)
 {
     // Convert to HSV image
     Mat HSV_frame;
@@ -118,8 +74,8 @@ Mat VisionModule::SearchColourBlob(Mat sourceImage, Scalar lowerValue, Scalar up
 
     // Search for  blobs
     vector<cv::KeyPoint> keypoints;
-    sbd->detect(thresholded_frame * 255, keypoints);
-    cout << "Amount of select blobs: " << keypoints.size() << endl;
+    _sbd->detect(thresholded_frame * 255, keypoints);
+    //cout << "Amount of select blobs: " << keypoints.size() << endl;
 
     // Mark the found blobs
     Mat marker = Mat::zeros(sourceImage.size(), CV_8UC3);;
@@ -139,7 +95,7 @@ Mat VisionModule::SearchColourBlob(Mat sourceImage, Scalar lowerValue, Scalar up
     return marker;
 }
 
-bool VisionModule::HandleCorners(vector<Point2d> corners)
+bool VisionModule::_HandleCorners(vector<Point2d> corners)
 {
     if (corners.size() != 4)    // Check if 4 corners are present
     {
@@ -170,9 +126,9 @@ bool VisionModule::HandleCorners(vector<Point2d> corners)
     }
 
     // Save grid information to class attributes
-    gridStart = Point2d(smallestX, smallestY);
-    gridWidth = largestX - smallestX;
-    gridHeigth = largestY - smallestY;
+    _gridStart = Point2d(smallestX, smallestY);
+    _gridWidth = largestX - smallestX;
+    _gridHeigth = largestY - smallestY;
 
     //cout << "Grid is " << gridWidth << "x" << gridHeigth << " pixels\n";
     //cout << "Grid starts at (" << gridStart.x << "," << gridStart.y << ")\n";
@@ -180,28 +136,94 @@ bool VisionModule::HandleCorners(vector<Point2d> corners)
     return true;
 }
 
-bool VisionModule::HandleSelection(Point2d selection)
+bool VisionModule::_HandleSelection(Point2d selection)
 {
     //Check if the selection is within the grid
-    if (selection.x < gridStart.x || selection.x > gridStart.x + gridWidth)
+    if (selection.x < _gridStart.x || selection.x > _gridStart.x + _gridWidth)
     {
         cout << "VisionModule::HandleSelection: Selection not in grid";
         return false;
     }
-    if (selection.y < gridStart.y || selection.y > gridStart.y + gridHeigth)
+    if (selection.y < _gridStart.y || selection.y > _gridStart.y + _gridHeigth)
     {
         cout << "VisionModule::HandleSelection: Selection not in grid";
         return false;
     }
 
     //Calculate the x and y values as a 10x10 grid
-    float cellWidth = gridWidth / 10;
-    float cellheigth = gridHeigth / 10;
+    float cellWidth = _gridWidth / 10;
+    float cellheigth = _gridHeigth / 10;
 
-    int selectionX = (selection.x - gridStart.x) / cellWidth;
-    int selectionY = (selection.y - gridStart.y) / cellheigth;
+    int selectionX = (selection.x - _gridStart.x) / cellWidth;
+    int selectionY = (selection.y - _gridStart.y) / cellheigth;
 
-    callback(selectionX, selectionY);
+    _callback(selectionX, selectionY);
 
     return true;
+}
+
+void VisionModule::_VisionThread()
+{
+    _sbd = SimpleBlobDetector::create();
+
+    namedWindow("Control Corners");
+    createTrackbar("LowH", "Control Corners", &cLowH, 255); //Hue (0 - 255)
+    createTrackbar("HighH", "Control Corners", &cHighH, 255);
+    createTrackbar("LowS", "Control Corners", &cLowS, 255); //Saturation (0 - 255)
+    createTrackbar("HighS", "Control Corners", &cHighS, 255);
+    createTrackbar("LowV", "Control Corners", &cLowV, 255);//Value (0 - 255)
+    createTrackbar("HighV", "Control Corners", &cHighV, 255);
+
+    namedWindow("Control Select");
+    createTrackbar("LowH", "Control Select", &sLowH, 255); //Hue (0 - 255)
+    createTrackbar("HighH", "Control Select", &sHighH, 255);
+    createTrackbar("LowS", "Control Select", &sLowS, 255); //Saturation (0 - 255)
+    createTrackbar("HighS", "Control Select", &sHighS, 255);
+    createTrackbar("LowV", "Control Select", &sLowV, 255);//Value (0 - 255)
+    createTrackbar("HighV", "Control Select", &sHighV, 255);
+
+    while (_isRunning)
+    {
+        Mat original_frame;
+        bool bSuccess = _cap.read(original_frame);
+
+        if (bSuccess)   //Check if the videocapture was able te retrieve a frame
+        {
+            if (original_frame.empty())
+            {
+                std::cout << "Couldn't read frame from video stream\n";
+            }
+
+            Mat marked_frame = original_frame;
+
+            //Search for red corners
+            vector<Point2d> cornerPoints;
+            marked_frame += _SearchColourBlob(original_frame, Scalar(cLowH, cLowS, cLowV), Scalar(cHighH, cHighS, cHighV), cornerPoints);
+
+            //Search for a blue selection marker
+            vector<Point2d> selectionPoints;
+            marked_frame += _SearchColourBlob(original_frame, Scalar(sLowH, sLowS, sLowV), Scalar(sHighH, sHighS, sHighV), selectionPoints);
+
+            // Process position data
+            _HandleCorners(cornerPoints);
+            if (selectionPoints.size() > 0)
+            {
+                _HandleSelection(selectionPoints[0]);
+            }
+
+            imshow("Marked", marked_frame);
+
+        }
+        else
+        {
+            cout << "Cannot read a frame from video stream" << endl;
+        }
+        
+        //Sleep for 50ms to allow other threads to execute
+        //this_thread::sleep_for(10ms);
+    }
+
+    // Release resources
+    destroyAllWindows();
+    _sbd.release();
 }
