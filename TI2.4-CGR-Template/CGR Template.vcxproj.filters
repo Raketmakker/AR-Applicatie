@@ -24,9 +24,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="blobdetectionavans.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>Source Files\GraphicsModule</Filter>
     </ClCompile>
@@ -63,11 +60,11 @@
     <ClCompile Include="Cube.cpp">
       <Filter>Source Files\GraphicsModule</Filter>
     </ClCompile>
+    <ClCompile Include="VisionModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="blobdetectionavans.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Component.h">
       <Filter>Header Files\GraphicsModuleHeaders</Filter>
     </ClInclude>
@@ -106,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="Cube.h">
       <Filter>Header Files\GraphicsModuleHeaders</Filter>
+    </ClInclude>
+    <ClInclude Include="VisionModule.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
