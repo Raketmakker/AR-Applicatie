@@ -4,6 +4,7 @@
 #include "opencv2/imgproc/imgproc.hpp" 
 #include "opencv2/highgui/highgui.hpp"
 #define STB_IMAGE_IMPLEMENTATION
+#define STB_TRUETYPE_IMPLEMENTATION
 #include "stb_image.h"
 #include "GraphicMain.h"
 #include "VisionModule.h"
@@ -36,16 +37,18 @@ int main(void)
 
     graphicMain = new GraphicMain(graphicsWindow);
     graphicMain->init();
+    graphicMain->test();
 
 	while (!glfwWindowShouldClose(graphicsWindow))
 	{
-		update();
+        update();
 		draw();
-		glfwSwapBuffers(graphicsWindow);
+        glfwSwapBuffers(graphicsWindow);
 		glfwPollEvents();
 	}
 
 	glfwTerminate();
+    gltTerminate();
     visionModule.Stop();
 
     return 0;

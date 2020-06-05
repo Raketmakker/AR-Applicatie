@@ -8,6 +8,7 @@
 #include "GraphicModel.h"
 #include <iostream>
 #include "Cube.h"
+#include "Text.h"
 
 class GraphicMain
 {
@@ -15,6 +16,7 @@ private:
 	GLFWwindow* window;
 	std::list<GameObject*> gameObjects;
 	FpsCam* cam;
+	Text* text;
 
 	const int gridSize = 10;
 	const float tileSize = 20.0f;

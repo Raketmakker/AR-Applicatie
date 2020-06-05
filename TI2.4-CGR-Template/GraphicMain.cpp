@@ -16,6 +16,7 @@ GraphicMain::GraphicMain(GLFWwindow* window)
 void GraphicMain::init()
 {
     this->cam = new FpsCam(window);
+    this->text = new Text(window);
     drawGrid(0, 0);
     drawGrid(1, 0);
 }
@@ -30,7 +31,7 @@ void GraphicMain::drawGrid(int offsetX, int offsetZ)
         line = new GameObject();
         line->addComponent(new Line(glm::vec3(x * tileSize + offsetX * (gridSize * tileSize + tileSize), gridHeight, offsetZ * (gridSize * tileSize + tileSize)),
             glm::vec3(x * tileSize + offsetX * (gridSize * tileSize + tileSize), gridHeight, gridSize * tileSize + offsetZ * (gridSize * tileSize + tileSize)),
-            glm::vec4(0, 0, 0, 0), 3.0f));
+            glm::vec4(0, 0, 0, 1), 3.0f));
         gameObjects.push_back(line);
     }
 
@@ -39,7 +40,7 @@ void GraphicMain::drawGrid(int offsetX, int offsetZ)
         line = new GameObject();
         line->addComponent(new Line(glm::vec3(offsetX * (gridSize * tileSize + tileSize), gridHeight, z * tileSize + offsetZ * (gridSize * tileSize + tileSize)),
             glm::vec3(gridSize * tileSize + offsetX * (gridSize * tileSize + tileSize), gridHeight, z * tileSize + offsetZ * (gridSize * tileSize + tileSize)),
-            glm::vec4(0, 0, 0, 0), 3.0f));
+            glm::vec4(0, 0, 0, 1), 3.0f));
         gameObjects.push_back(line);
     }
 }
@@ -57,7 +58,7 @@ void GraphicMain::draw()
 {
     glClearColor(0.3f, 0.4f, 0.6f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    
     int viewport[4];
     glGetIntegerv(GL_VIEWPORT, viewport);
     glm::mat4 projection = glm::perspective(glm::radians(100.0f), viewport[2] / (float)viewport[3], 0.01f, 1000.0f);
@@ -70,6 +71,8 @@ void GraphicMain::draw()
 
     for (auto& o : this->gameObjects)
         o->draw();
+
+    this->text->draw(projection * cam->getMatrix());
 }
 
 GameObject* GraphicMain::placeBoat(int x, int y, int length)
