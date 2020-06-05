@@ -60,6 +60,9 @@
     <ClCompile Include="GraphicMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>Source Files\GraphicsModule</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="blobdetectionavans.h">
@@ -100,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="GraphicMain.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>Header Files\GraphicsModuleHeaders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

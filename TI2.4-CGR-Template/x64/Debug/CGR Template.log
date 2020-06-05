@@ -1,2 +1,3 @@
-﻿  GraphicMain.cpp
+﻿  main.cpp
+C:\Users\Jaspe\Documents\_Github\AR-Applicatie\TI2.4-CGR-Template\main.cpp(59,16): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   CGR Template.vcxproj -> C:\Users\Jaspe\Documents\_Github\AR-Applicatie\TI2.4-CGR-Template\x64\Debug\CGR Template.exe
