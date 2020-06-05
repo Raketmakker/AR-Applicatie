@@ -198,6 +198,10 @@ void VisionModule::_VisionThread()
 
             //Search for red corners
             vector<Point2d> cornerPoints;
+            if (!_isRunning)
+            {
+                break;
+            }
             marked_frame += _SearchColourBlob(original_frame, Scalar(cLowH, cLowS, cLowV), Scalar(cHighH, cHighS, cHighV), cornerPoints);
 
             //Search for a blue selection marker

@@ -61,8 +61,8 @@ int main(void)
 		glfwPollEvents();
 	}
 
-	glfwTerminate();
     visionModule.Stop();
+	glfwTerminate();
 
     return 0;
 }
