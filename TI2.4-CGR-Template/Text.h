@@ -6,14 +6,12 @@
 #define GLT_IMPLEMENTATION
 #include "gltext.h"
 #include <iostream>
+#include "DrawComponent.h"
 
-class Text
+class Text : public DrawComponent
 {
-private:
-	GLTtext* text;
-	GLFWwindow* window;
 public:
-	Text(GLFWwindow* window);
+	Text();
 	~Text();
-	void draw(glm::mat4 mpv);
+	virtual void draw() override;
 };

@@ -1,26 +1,26 @@
 #include "Text.h"
 
-Text::Text(GLFWwindow* window)
+//Initialize the draw component
+Text::Text()
 {
-	this->window = window;
 	if (!gltInit())
 	{
 		fprintf(stderr, "Failed to initialize glText\n");
 		glfwTerminate();
-		//return EXIT_FAILURE;
+		std::cout << "Could not initialize gltInit" << std::endl;
+		exit(2);
 	}
 	tigl::shader->use();
 }
 
 Text::~Text()
 {
-	gltDeleteText(text);
 	gltTerminate();
 }
 
-void Text::draw(glm::mat4 mpv)
-{
-	
+//Draw the textfields
+void Text::draw()
+{	
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	

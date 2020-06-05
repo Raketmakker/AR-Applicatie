@@ -16,7 +16,9 @@ GraphicMain::GraphicMain(GLFWwindow* window)
 void GraphicMain::init()
 {
     this->cam = new FpsCam(window);
-    this->text = new Text(window);
+    GameObject* text = new GameObject();
+    text->addComponent(new Text());
+    this->gameObjects.push_back(text);
     drawGrid(0, 0);
     drawGrid(1, 0);
 }
@@ -71,8 +73,6 @@ void GraphicMain::draw()
 
     for (auto& o : this->gameObjects)
         o->draw();
-
-    this->text->draw(projection * cam->getMatrix());
 }
 
 GameObject* GraphicMain::placeBoat(int x, int y, int length)
