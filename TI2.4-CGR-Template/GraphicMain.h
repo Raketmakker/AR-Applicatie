@@ -8,6 +8,7 @@
 #include "GraphicModel.h"
 #include <iostream>
 #include "Cube.h"
+#include "Text.h"
 
 class GraphicMain
 {
@@ -23,6 +24,7 @@ private:
 	const glm::vec3 shipOffset = glm::vec3(0, -100, 0);
 	void drawGrid(int offsetX, int offsetZ);
 public:
+	Text* text;
 	void init();
 	void update(float deltaTime);
 	void draw();
