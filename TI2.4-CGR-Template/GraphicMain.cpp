@@ -106,20 +106,35 @@ GameObject* GraphicMain::placeBoat(int x, int y, int length)
     return ship;
 }
 
-void GraphicMain::firePin(int x, int z, int offsetX, int offsetZ, bool hit)
+GameObject* GraphicMain::firePin(int x, int z, int offsetX, int offsetZ)
 {
     GameObject* pin = new GameObject();
+    setPinPosition(pin, x, z, offsetX, offsetZ);
+    pin->addComponent(new Cube(tileSize * pinSize, glm::vec4(0.0f, 1.0f, 64.0f / 255.0f, 1.0f)));
+    gameObjects.push_back(pin);
+    return pin;
+}
+
+void GraphicMain::setPinPosition(GameObject* pin, int x, int z, int offsetX, int offsetZ)
+{
     pin->position = glm::vec3(x * tileSize + offsetX * gridSize * tileSize + tileSize / 2 + tileSize * offsetX,
         gridHeight + tileSize / 2, z * tileSize + offsetZ * gridSize * tileSize + tileSize / 2 + tileSize * offsetZ);
-    if (hit)
+}
+
+void GraphicMain::setPinHit(GameObject* pin, bool hit)
+{
+    Cube* cube = pin->getComponent<Cube>();
+    if (cube != nullptr)
     {
-        pin->addComponent(new Cube(tileSize * pinSize, glm::vec4(1, 0, 0, 1)));
+        if (hit)
+        {
+            cube->setColor(glm::vec4(1, 0, 0, 1));
+        }
+        else
+        {
+            cube->setColor(glm::vec4(0, 1, 1, 1));
+        }
     }
-    else
-    {
-        pin->addComponent(new Cube(tileSize * pinSize, glm::vec4(0, 0, 1, 1)));
-    }
-    gameObjects.push_back(pin);
 }
 
 void GraphicMain::test()
@@ -129,7 +144,7 @@ void GraphicMain::test()
     {
         placeBoat(i, i, i);
     }
-
+    GameObject* pin;
     //Test the pins on grid 0, 0
     for (size_t x = 0; x < gridSize; x++)
     {
@@ -137,11 +152,13 @@ void GraphicMain::test()
         {
             if ((z + x) % 2 == 0)
             {
-                firePin(x, z, 0, 0, true);
+                pin = firePin(x, z, 0, 0);
+                setPinHit(pin, true);
             }
             else
             {
-                firePin(x, z, 0, 0, false);
+                pin = firePin(x, z, 0, 0);
+                setPinHit(pin, false);
             }
         }
     }
@@ -153,12 +170,18 @@ void GraphicMain::test()
         {
             if ((z + x) % 2 == 0)
             {
-                firePin(x, z, 1, 0, false);
+                pin = firePin(x, z, 1, 0);
+                //setPinHit(pin, false);
             }
             else
             {
-                firePin(x, z, 1, 0, true);
+                pin = firePin(x, z, 1, 0);
+                setPinHit(pin, true);
             }
         }
     }
+
+    //Text test
+    this->text->setText({ "Test line 1", "Test line 2 (selected)", "Test line 3" });
+    this->text->setSelected(1);
 }
