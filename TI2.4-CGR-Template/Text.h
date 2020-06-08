@@ -7,11 +7,20 @@
 #include "gltext.h"
 #include <iostream>
 #include "DrawComponent.h"
+#include <vector>
 
 class Text : public DrawComponent
 {
+private:
+	const int textHight = 20;
+	const int borderOffset = 10;
+	int selected = -1;
+	std::vector<std::string> texts;
+	std::vector<GLTtext*> gltTexts;
 public:
 	Text();
 	~Text();
+	void setSelected(int i);
+	void setText(std::vector<std::string> texts);
 	virtual void draw() override;
 };

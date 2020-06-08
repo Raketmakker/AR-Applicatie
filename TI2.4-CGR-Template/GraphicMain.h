@@ -16,7 +16,6 @@ private:
 	GLFWwindow* window;
 	std::list<GameObject*> gameObjects;
 	FpsCam* cam;
-	Text* text;
 
 	const int gridSize = 10;
 	const float tileSize = 20.0f;
@@ -25,6 +24,7 @@ private:
 	const glm::vec3 shipOffset = glm::vec3(0, -100, 0);
 	void drawGrid(int offsetX, int offsetZ);
 public:
+	Text* text;
 	void init();
 	void update(float deltaTime);
 	void draw();

@@ -16,9 +16,10 @@ GraphicMain::GraphicMain(GLFWwindow* window)
 void GraphicMain::init()
 {
     this->cam = new FpsCam(window);
-    GameObject* text = new GameObject();
-    text->addComponent(new Text());
-    this->gameObjects.push_back(text);
+    GameObject* textGameObject = new GameObject();
+    this->text = new Text();
+    textGameObject->addComponent(this->text);
+    this->gameObjects.push_back(textGameObject);
     drawGrid(0, 0);
     drawGrid(1, 0);
 }
