@@ -33,6 +33,7 @@ public:
 	void setPinPosition(GameObject* pin, int x, int z, int offsetX, int offsetZ);
 	void setPinHit(GameObject* pin, bool hit);
 	GameObject* placeBoat(int x, int z, int length);
+	void setBoatPosition(GameObject* ship, int x, int z, int length);
 	GraphicMain(GLFWwindow* window);
 };
 

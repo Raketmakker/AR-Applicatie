@@ -76,26 +76,27 @@ void GraphicMain::draw()
         o->draw();
 }
 
-GameObject* GraphicMain::placeBoat(int x, int y, int length)
+//Place a boat on the player grid
+GameObject* GraphicMain::placeBoat(int x, int z, int length)
 {
     GameObject* ship = new GameObject();
     ship->rotation.y = glm::radians(90.0f);
     switch (length)
     {
     case 2:
-        ship->position = glm::vec3(x * tileSize + (float)length / 2.0f * tileSize, 0, y * tileSize + 0.5f * tileSize) + shipOffset;
+        setBoatPosition(ship, x, z, length);
         ship->addComponent(new GraphicModel("models/Ship2/Ship2.obj"));
         break;
     case 3:
-        ship->position = glm::vec3(x * tileSize + (float)length / 2.0f * tileSize, 0, y * tileSize + 0.5f * tileSize) + shipOffset;
+        setBoatPosition(ship, x, z, length);
         ship->addComponent(new GraphicModel("models/Ship3/Ship3.obj"));
         break;
     case 4:
-        ship->position = glm::vec3(x * tileSize + (float)length / 2.0f * tileSize, 0, y * tileSize + 0.5f * tileSize) + shipOffset;
+        setBoatPosition(ship, x, z, length);
         ship->addComponent(new GraphicModel("models/Ship4/Ship4.obj"));
         break;
     case 5:
-        ship->position = glm::vec3(x * tileSize + (float)length / 2.0f * tileSize, 0, y * tileSize + 0.5f * tileSize) + shipOffset;
+        setBoatPosition(ship, x, z, length);
         ship->addComponent(new GraphicModel("models/Ship5/Ship5.obj"));
         break;
     default:
@@ -106,6 +107,20 @@ GameObject* GraphicMain::placeBoat(int x, int y, int length)
     return ship;
 }
 
+//Set the position of the given boat on player grid
+void GraphicMain::setBoatPosition(GameObject* ship, int x, int z, int length)
+{
+    if (length >= 2 && length <= 5)
+    {
+        ship->position = glm::vec3(x * tileSize + (float)length / 2.0f * tileSize, 0, z * tileSize + 0.5f * tileSize) + shipOffset;
+    }
+    else
+    {
+        std::cout << "Given ship length not valid! - GraphicMain::setBoatPosition" << std::endl;
+    }
+}
+
+//Fire a pin at the given coordinates
 GameObject* GraphicMain::firePin(int x, int z, int offsetX, int offsetZ)
 {
     GameObject* pin = new GameObject();
@@ -115,12 +130,14 @@ GameObject* GraphicMain::firePin(int x, int z, int offsetX, int offsetZ)
     return pin;
 }
 
+//Set the given pin at the given coordinates
 void GraphicMain::setPinPosition(GameObject* pin, int x, int z, int offsetX, int offsetZ)
 {
     pin->position = glm::vec3(x * tileSize + offsetX * gridSize * tileSize + tileSize / 2 + tileSize * offsetX,
         gridHeight + tileSize / 2, z * tileSize + offsetZ * gridSize * tileSize + tileSize / 2 + tileSize * offsetZ);
 }
 
+//Changes the color of the given pin. If hit -> red, else -> cyan
 void GraphicMain::setPinHit(GameObject* pin, bool hit)
 {
     Cube* cube = pin->getComponent<Cube>();
