@@ -23,8 +23,9 @@ Line::Line(glm::vec3 start, glm::vec3 end, glm::vec4 color, float width)
 
 void Line::draw()
 {
-	tigl::shader->enableColor(true);
 	tigl::begin(GL_QUADS);
+	tigl::shader->enableTexture(false);
+	tigl::shader->enableColor(true);
 	
 	for (auto& vert : this->verts)
 	{

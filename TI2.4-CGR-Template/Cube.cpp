@@ -6,6 +6,11 @@ Cube::Cube(float radius, glm::vec4 color)
 	this->color = color;
 }
 
+void Cube::setColor(glm::vec4 color)
+{
+	this->color = color;
+}
+
 void Cube::draw()
 {
 	tigl::begin(GL_QUADS);
