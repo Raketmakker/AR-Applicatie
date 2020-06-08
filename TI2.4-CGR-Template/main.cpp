@@ -26,25 +26,19 @@ using tigl::Vertex;
 
 GLFWwindow* graphicsWindow;
 GLFWwindow* visionWindow;
+VisionModule visionModule;
 std::list<GameObject*> gameObjects;
 
 void init();
 void update();
 void draw();
 
-void VisionCallback(int x, int y)
-{
-    cout << "Selection is on (" << x << "," << y << ")\n";
-}
-
 int main(void)
 {
-    VisionModule visionModule(VisionCallback);
     visionModule.Start();
 
     if (!glfwInit())
         throw "Could not initialize glwf";
-    visionWindow = glfwCreateWindow(1400, 800, "Vision window", NULL, NULL);
     graphicsWindow = glfwCreateWindow(1400, 800, "Graphics window", NULL, NULL);
     
     glfwMakeContextCurrent(graphicsWindow);
@@ -74,6 +68,12 @@ void init()
     {
         if (key == GLFW_KEY_ESCAPE)
             glfwSetWindowShouldClose(window, true);
+        if (key == GLFW_KEY_SPACE) {
+            //Doe iets met X en Y.
+            //Als je wil kan je ook Point lastPoint halen uit de visionmodule. Dan heb je de callback niet nodig.
+            Point2d selection = visionModule.GetSelectionPos();
+            cout << "Selection at: (" << selection.x << "," << selection.y << ")" << endl;
+        }
     });
     glEnable(GL_DEPTH_TEST);
 }

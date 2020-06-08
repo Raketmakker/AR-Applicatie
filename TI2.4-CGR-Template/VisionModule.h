@@ -5,21 +5,29 @@
 #include "opencv2/imgproc/imgproc.hpp"
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace cv;
 using namespace std;
 
 // Function pointer
-typedef void (*callback_function)(int x, int y);
+
+struct simpleCoordinate {
+    int x;
+    int y;
+};
 
 class VisionModule {
 private:
+
     cv::VideoCapture _cap;               // used to read frames from a camera
     Ptr<SimpleBlobDetector> _sbd;        // used to detect blobs
-    callback_function _callback;         // callback method for coordinates on grid
     float _gridWidth;                    // The width of the grid in pixels
     float _gridHeigth;                   // The heigth of the grid in pixels 
+    float _gridDiameter;                 // The diameter of the grid
     Point2d _gridStart;                  // The upper left corner of the grid
+    Point2d _gridEnd;                    // The lower right corner of the grid
+    vector<Point2d> _points;             // List of the last 10 points, used to make the the module more consistent
     bool _isRunning;                     // Keeps track if the visionmodule is currently running 
 
     /**
@@ -39,7 +47,7 @@ private:
         @param corners a vector of all the corners found, checks internally if there are 4 corners
         @return true if the processing was succesful, false if unsuccesful
     */
-    bool _HandleCorners(std::vector<Point2d> corners);
+    bool _HandleCorners(std::vector<Point2d>& corners);
 
     /**
         @brief Helper method which processes the data about the selection
@@ -47,7 +55,7 @@ private:
         @param selection the point on the screen which the user has selected
         @return true if the processing was succesful, false if unsuccesful
     */
-    bool _HandleSelection(Point2d selection);
+    bool _HandleSelection(vector<Point2d>& selection);
 
     /**
         @brief Function executed by the visionmodule thread.
@@ -55,8 +63,7 @@ private:
     void _VisionThread();
 
 public:
-    VisionModule(callback_function callback) noexcept;
-    VisionModule() = delete;
+    VisionModule();
     ~VisionModule() = default;
 
     /**
@@ -70,4 +77,11 @@ public:
         @brief Stops the visionmodule process. This function stops the current thread, and releases any of it's current resources.
     */
     void Stop();
+
+    /**
+        @Brief  Returns the coordinates of the selelectionmarker, takes the most occurring coordinate in the last 10 measurement
+
+        @return The most occuring point in the last, returns nothing if there arent any points yet
+    */
+    Point2d GetSelectionPos();
 };
