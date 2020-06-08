@@ -48,7 +48,7 @@ void GraphicMain::drawGrid(int offsetX, int offsetZ)
 void GraphicMain::update(float deltaTime)
 {
     this->cam->update(window);
-    for (auto& o : gameObjects)
+    for (GameObject* o : gameObjects)
         o->update(deltaTime);
 }
 

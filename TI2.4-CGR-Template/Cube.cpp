@@ -11,7 +11,7 @@ void Cube::draw()
 	tigl::begin(GL_QUADS);
 	tigl::shader->enableTexture(false);
 	tigl::shader->enableColor(true);
-	
+
 	//Front
 	tigl::addVertex(tigl::Vertex::PC(glm::vec3(-radius, -radius, radius), color));
 	tigl::addVertex(tigl::Vertex::PC(glm::vec3(radius, -radius, radius), color));
