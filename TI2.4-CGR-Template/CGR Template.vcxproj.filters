@@ -19,6 +19,12 @@
     <Filter Include="Header Files\GraphicsModuleHeaders">
       <UniqueIdentifier>{19a3d4b6-a7b1-40f7-bbd6-29c0a835dcd7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\GameLogic">
+      <UniqueIdentifier>{a4306972-f299-4575-9516-297431e19b76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameLogic">
+      <UniqueIdentifier>{96db30e9-37f1-4426-9ab6-d79995d3ad3e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -69,11 +75,14 @@
     <ClCompile Include="bord.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameLogic.cpp">
+    <ClCompile Include="Text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameLogic.cpp">
+      <Filter>Source Files\GameLogic</Filter>
+    </ClCompile>
     <ClCompile Include="LogicComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GameLogic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,14 +134,20 @@
     <ClInclude Include="bord.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameLogic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="struct.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LogicComponent.h">
+    <ClInclude Include="gltext.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLogic.h">
+      <Filter>Header Files\GameLogic</Filter>
+    </ClInclude>
+    <ClInclude Include="LogicComponent.h">
+      <Filter>Header Files\GameLogic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

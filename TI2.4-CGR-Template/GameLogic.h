@@ -7,21 +7,22 @@
 #pragma once
 
 using namespace std;
+
+enum class GameState {
+    STATE_NOT_STARTED,
+    STATE_PLACEMENT,
+    STATE_PLAYERTURN,
+    STATE_AITURN,
+    STATE_GAMEOVER
+};
+
 class GameLogic : public Component {
-
-    enum class GameState {
-        STATE_NOT_STARTED,
-        STATE_PLACEMENT,
-        STATE_PLAYERTURN,
-        STATE_AITURN,
-        STATE_GAMEOVER
-    };
-
 private:
     Bord bordSpeler;
     Bord bordAI;
-    GameState gamestate;
 public:
+    GameState gamestate;
+    vector<int> boats = {5,4,3,3,2};
     GameLogic();
     ~GameLogic();
 

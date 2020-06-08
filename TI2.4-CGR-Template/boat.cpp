@@ -9,6 +9,15 @@ Boat::Boat(int boatSize, vector<coordinate> coords) {
     }
 }
 
+Boat::Boat(int boatSize, coordinate coords) {
+    size = boatSize;
+    boat.push_back(coords);
+    for (int i = 1; i < boatSize; i++) {
+        coords.x++;
+        boat.push_back(coords);
+    }
+}
+
 vector<coordinate> Boat::Boat_getBoat() {
     return boat;
 }

@@ -43,17 +43,19 @@ int main(void)
 
     graphicMain = new GraphicMain(graphicsWindow);
     graphicMain->init();
-    graphicMain->test();
+    //graphicMain->test();
 
     graphicMain->placeBoat(1, 1, 5);
     /*graphicMain->placeBoat(4, 5, 3);
     graphicMain->placeBoat(8, 8, 2);
     graphicMain->placeBoat(6, 2, 4);*/
-	graphicMain->firePin(0, 0, 0, 0, 0);
-	graphicMain->firePin(1, 1, 1, 0, 1);
+	GameObject* pin = graphicMain->firePin(0, 0, 0, 0);
+	GameObject* pin2 = graphicMain->firePin(1, 1, 1, 0);
+	graphicMain->setPinHit(pin, 1);
+	graphicMain->setPinHit(pin2, 0);
 
 	logicObject = new GameObject();
-	logicObject->addComponent(new LogicComponent());
+	logicObject->addComponent(new LogicComponent(graphicMain));
 
     //std::thread first(game);
 
@@ -64,9 +66,9 @@ int main(void)
         glfwSwapBuffers(graphicsWindow);
 		glfwPollEvents();
 	}
+	visionModule.Stop();
 	glfwTerminate();
     gltTerminate();
-    visionModule.Stop();
 
     return 0;
 }
@@ -98,11 +100,6 @@ void game() {
 		//Player's turn
 		cout << "Player's turn" << endl;
 		while (1) {
-			cout << "Guess X:";
-			cin >> spelerX;
-			cout << "Guess Y:";
-			cin >> spelerY;
-
 			if (!(AI->checkIfGuessed({ spelerX, spelerY }))) {
 				break;
 			}

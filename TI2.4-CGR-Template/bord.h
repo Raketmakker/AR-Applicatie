@@ -2,6 +2,7 @@
 #define _BORD_H_
 #include <iostream>
 #include "boat.h"
+#include "struct.h"
 
 using namespace std;
 class Bord {
@@ -13,7 +14,7 @@ private:
     vector<coordinate> guesses;
 
 public:
-    bool addBoat(Boat boat);
+    void addBoat(Boat boat);
 
     void printBoats();
 
@@ -24,6 +25,8 @@ public:
     bool findBoat(coordinate c);
 
     void printBord();
+
+    bool checkIfBoatOverlap(Boat boat);
 
     bool checkIfGuessed(coordinate c);
 

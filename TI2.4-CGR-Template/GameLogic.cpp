@@ -44,5 +44,5 @@ void GameLogic::printBords() {
 }
 
 void GameLogic::update(float elapsedTime) {
-	cout << "TEST 2" << endl;
+	
 };

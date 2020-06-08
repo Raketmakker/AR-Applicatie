@@ -4,18 +4,17 @@
 
 using namespace std;
 
-bool Bord::addBoat(Boat boat) {
+void Bord::addBoat(Boat boat) {
+    boats.push_back(boat);
+    fillBord();
+}
+
+bool Bord::checkIfBoatOverlap(Boat boat) {
     bool overlap = false;
     for (coordinate c : boat.Boat_getBoat()) {
         if (findBoat(c)) overlap = true;
     }
-
-    if (!overlap) {
-        boats.push_back(boat);
-        fillBord();
-        return true;
-    }
-    return false;
+    return overlap;
 }
 
 void Bord::printBoats() {

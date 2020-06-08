@@ -12,7 +12,7 @@
 class Text : public DrawComponent
 {
 private:
-	const int textHight = 20;
+	const int textHight = 40;
 	const int borderOffset = 10;
 	int selected = -1;
 	std::vector<std::string> texts;

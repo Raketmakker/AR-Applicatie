@@ -54,7 +54,7 @@ void Text::draw()
 		{
 			gltColor(1.0f, 1.0f, 1.0f, 1.0f);
 		}
-		gltDrawText2D(gltTexts[i], borderOffset, borderOffset + i * textHight, 1.0f);
+		gltDrawText2D(gltTexts[i], borderOffset, borderOffset + i * textHight, 2.0f);
 	}
 	gltEndDraw();
 
