@@ -32,6 +32,8 @@ public:
 
     bool checkIfBoatWasDestroyed();
 
+    bool checkIfBoatIsInBounds(Boat boat);
+
     int checkIfDead();
 };
 

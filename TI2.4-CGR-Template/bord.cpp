@@ -81,6 +81,16 @@ bool Bord::checkIfBoatWasDestroyed() {
     return false;
 }
 
+bool Bord::checkIfBoatIsInBounds(Boat boat)
+{
+    for (coordinate c : boat.Boat_getBoat()) {
+        if (c.x > 9 || c.x < 0 || c.y > 9 || c.y < 0) {
+            return false;
+        }
+    }
+	return true;
+}
+
 int Bord::checkIfDead() {
     int* currentElement = &(bord[0][0]); // Create pointer to first element
 

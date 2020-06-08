@@ -12,7 +12,14 @@ private:
 	GameObject* tempBoat;
 	int tempBoatLength;
 	bool tempBoatSpawned = false;
-	Boat tempBoatB;
+	Boat tempBoatB = Boat(1, {0,0});
+	coordinate tempBoatCoords = { 0,0 };
+	double counter = 0;
+
+	bool tempPinSpawned = false;
+	coordinate tempPinCoords = { 0,0 };
+	GameObject* tempPin;
+
 public:
 	LogicComponent(GraphicMain* graphicmain);
 	~LogicComponent();
@@ -23,6 +30,8 @@ public:
 	void statePlayerTurn();
 	void stateAITurn();
 	void stateGameOver();
+
+	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 };
 

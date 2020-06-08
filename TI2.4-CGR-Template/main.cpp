@@ -36,7 +36,7 @@ int main(void)
     if (!glfwInit())
         throw "Could not initialize glwf";
     graphicsWindow = glfwCreateWindow(1400, 800, "Graphics window", NULL, NULL);
-    
+
     glfwMakeContextCurrent(graphicsWindow);
 
     tigl::init();
@@ -45,14 +45,10 @@ int main(void)
     graphicMain->init();
     //graphicMain->test();
 
-    graphicMain->placeBoat(1, 1, 5);
-    /*graphicMain->placeBoat(4, 5, 3);
-    graphicMain->placeBoat(8, 8, 2);
-    graphicMain->placeBoat(6, 2, 4);*/
-	GameObject* pin = graphicMain->firePin(0, 0, 0, 0);
+	/*GameObject* pin = graphicMain->firePin(0, 0, 0, 0);
 	GameObject* pin2 = graphicMain->firePin(1, 1, 1, 0);
 	graphicMain->setPinHit(pin, 1);
-	graphicMain->setPinHit(pin2, 0);
+	graphicMain->setPinHit(pin2, 0);*/
 
 	logicObject = new GameObject();
 	logicObject->addComponent(new LogicComponent(graphicMain));

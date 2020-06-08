@@ -4,6 +4,7 @@
 #include <iostream>
 #include "bord.h"
 #include "Component.h"
+#include "GraphicMain.h"
 #pragma once
 
 using namespace std;
@@ -21,9 +22,11 @@ private:
     Bord bordSpeler;
     Bord bordAI;
 public:
+    GraphicMain* gm;
     GameState gamestate;
     vector<int> boats = {5,4,3,3,2};
     GameLogic();
+    GameLogic(GraphicMain* graphicMain);
     ~GameLogic();
 
 
@@ -32,6 +35,8 @@ public:
     Bord* getBordSpeler();
 
     Bord* getBordAI();
+
+    void initBordAI();
 
     void printBords();
 
