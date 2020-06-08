@@ -76,26 +76,27 @@ void GraphicMain::draw()
         o->draw();
 }
 
-GameObject* GraphicMain::placeBoat(int x, int y, int length)
+//Place a boat on the player grid
+GameObject* GraphicMain::placeBoat(int x, int z, int length)
 {
     GameObject* ship = new GameObject();
     ship->rotation.y = glm::radians(90.0f);
     switch (length)
     {
     case 2:
-        ship->position = glm::vec3(x * tileSize + (float)length / 2.0f * tileSize, 0, y * tileSize + 0.5f * tileSize) + shipOffset;
+        setBoatPosition(ship, x, z, length);
         ship->addComponent(new GraphicModel("models/Ship2/Ship2.obj"));
         break;
     case 3:
-        ship->position = glm::vec3(x * tileSize + (float)length / 2.0f * tileSize, 0, y * tileSize + 0.5f * tileSize) + shipOffset;
+        setBoatPosition(ship, x, z, length);
         ship->addComponent(new GraphicModel("models/Ship3/Ship3.obj"));
         break;
     case 4:
-        ship->position = glm::vec3(x * tileSize + (float)length / 2.0f * tileSize, 0, y * tileSize + 0.5f * tileSize) + shipOffset;
+        setBoatPosition(ship, x, z, length);
         ship->addComponent(new GraphicModel("models/Ship4/Ship4.obj"));
         break;
     case 5:
-        ship->position = glm::vec3(x * tileSize + (float)length / 2.0f * tileSize, 0, y * tileSize + 0.5f * tileSize) + shipOffset;
+        setBoatPosition(ship, x, z, length);
         ship->addComponent(new GraphicModel("models/Ship5/Ship5.obj"));
         break;
     default:
@@ -106,20 +107,51 @@ GameObject* GraphicMain::placeBoat(int x, int y, int length)
     return ship;
 }
 
-void GraphicMain::firePin(int x, int z, int offsetX, int offsetZ, bool hit)
+//Set the position of the given boat on player grid
+void GraphicMain::setBoatPosition(GameObject* ship, int x, int z, int length)
 {
-    GameObject* pin = new GameObject();
-    pin->position = glm::vec3(x * tileSize + offsetX * gridSize * tileSize + tileSize / 2 + tileSize * offsetX,
-        gridHeight + tileSize / 2, z * tileSize + offsetZ * gridSize * tileSize + tileSize / 2 + tileSize * offsetZ);
-    if (hit)
+    if (length >= 2 && length <= 5)
     {
-        pin->addComponent(new Cube(tileSize * pinSize, glm::vec4(1, 0, 0, 1)));
+        ship->position = glm::vec3(x * tileSize + (float)length / 2.0f * tileSize, 0, z * tileSize + 0.5f * tileSize) + shipOffset;
     }
     else
     {
-        pin->addComponent(new Cube(tileSize * pinSize, glm::vec4(0, 0, 1, 1)));
+        std::cout << "Given ship length not valid! - GraphicMain::setBoatPosition" << std::endl;
     }
+}
+
+//Fire a pin at the given coordinates
+GameObject* GraphicMain::firePin(int x, int z, int offsetX, int offsetZ)
+{
+    GameObject* pin = new GameObject();
+    setPinPosition(pin, x, z, offsetX, offsetZ);
+    pin->addComponent(new Cube(tileSize * pinSize, glm::vec4(0.0f, 1.0f, 64.0f / 255.0f, 1.0f)));
     gameObjects.push_back(pin);
+    return pin;
+}
+
+//Set the given pin at the given coordinates
+void GraphicMain::setPinPosition(GameObject* pin, int x, int z, int offsetX, int offsetZ)
+{
+    pin->position = glm::vec3(x * tileSize + offsetX * gridSize * tileSize + tileSize / 2 + tileSize * offsetX,
+        gridHeight + tileSize / 2, z * tileSize + offsetZ * gridSize * tileSize + tileSize / 2 + tileSize * offsetZ);
+}
+
+//Changes the color of the given pin. If hit -> red, else -> cyan
+void GraphicMain::setPinHit(GameObject* pin, bool hit)
+{
+    Cube* cube = pin->getComponent<Cube>();
+    if (cube != nullptr)
+    {
+        if (hit)
+        {
+            cube->setColor(glm::vec4(1, 0, 0, 1));
+        }
+        else
+        {
+            cube->setColor(glm::vec4(0, 1, 1, 1));
+        }
+    }
 }
 
 void GraphicMain::test()
@@ -129,7 +161,7 @@ void GraphicMain::test()
     {
         placeBoat(i, i, i);
     }
-
+    GameObject* pin;
     //Test the pins on grid 0, 0
     for (size_t x = 0; x < gridSize; x++)
     {
@@ -137,11 +169,13 @@ void GraphicMain::test()
         {
             if ((z + x) % 2 == 0)
             {
-                firePin(x, z, 0, 0, true);
+                pin = firePin(x, z, 0, 0);
+                setPinHit(pin, true);
             }
             else
             {
-                firePin(x, z, 0, 0, false);
+                pin = firePin(x, z, 0, 0);
+                setPinHit(pin, false);
             }
         }
     }
@@ -153,12 +187,18 @@ void GraphicMain::test()
         {
             if ((z + x) % 2 == 0)
             {
-                firePin(x, z, 1, 0, false);
+                pin = firePin(x, z, 1, 0);
+                //setPinHit(pin, false);
             }
             else
             {
-                firePin(x, z, 1, 0, true);
+                pin = firePin(x, z, 1, 0);
+                setPinHit(pin, true);
             }
         }
     }
+
+    //Text test
+    this->text->setText({ "Test line 1", "Test line 2 (selected)", "Test line 3" });
+    this->text->setSelected(1);
 }

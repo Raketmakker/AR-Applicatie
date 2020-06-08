@@ -11,6 +11,7 @@ private:
 	glm::vec4 color;
 public:
 	Cube(float size, glm::vec4 color);
+	void setColor(glm::vec4 color);
 	void draw();
 };
 

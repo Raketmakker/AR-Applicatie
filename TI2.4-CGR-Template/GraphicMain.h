@@ -28,9 +28,12 @@ public:
 	void init();
 	void update(float deltaTime);
 	void draw();
-	void firePin(int x, int z, int offsetX, int offsetZ, bool hit);
 	void test();
+	GameObject* firePin(int x, int z, int offsetX, int offsetZ);
+	void setPinPosition(GameObject* pin, int x, int z, int offsetX, int offsetZ);
+	void setPinHit(GameObject* pin, bool hit);
 	GameObject* placeBoat(int x, int z, int length);
+	void setBoatPosition(GameObject* ship, int x, int z, int length);
 	GraphicMain(GLFWwindow* window);
 };
 
