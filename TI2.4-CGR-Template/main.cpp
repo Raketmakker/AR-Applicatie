@@ -58,6 +58,11 @@ int main(void)
     visionModule.Stop();
 	glfwTerminate();
 
+    while (!visionModule.IsThreadDone())
+    {
+        // Wait for the thread in visionModule to finish
+    }
+
     return 0;
 }
 

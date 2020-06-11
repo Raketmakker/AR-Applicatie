@@ -30,9 +30,9 @@ int sLowV = 19;
 int sHighV = 255;
 
 VisionModule::VisionModule():
-    _gridWidth(-1), _gridHeigth(-1), _gridStart(Point2d(-1, -1)), _isRunning(false)
+    _gridWidth(-1), _gridHeigth(-1), _gridStart(Point2d(-1, -1)), _isRunning(false), _lastPoint(Point2d(-1,-1)), _isDone(true)
 {
-    _cap = cv::VideoCapture(1);  // 0 = Webcam, for the daheng camera increase the number by one until you find it
+    _cap = cv::VideoCapture(0);  // 0 = Webcam, for the daheng camera increase the number by one until you find it
 
     if (_cap.isOpened())
     {
@@ -59,7 +59,9 @@ void VisionModule::Stop()
 
 Point2d VisionModule::GetSelectionPos()
 {
-    if (_points.empty())
+    return _lastPoint;
+
+    /*if (_points.empty())
     {
         return Point2d(-1, -1);
     }
@@ -92,7 +94,7 @@ Point2d VisionModule::GetSelectionPos()
             mostFrequentPoint = pair.first;
         }
     }
-    return Point2d(mostFrequentPoint%100, mostFrequentPoint/100);
+    return Point2d(mostFrequentPoint%100, mostFrequentPoint/100);*/
 }
 
 Mat VisionModule::_SearchColourBlob(Mat sourceImage, Scalar lowerValue, Scalar upperValue, vector<Point2d>& blobs)
@@ -117,6 +119,7 @@ Mat VisionModule::_SearchColourBlob(Mat sourceImage, Scalar lowerValue, Scalar u
     // Search for  blobs
     vector<cv::KeyPoint> keypoints;
     _sbd->detect(thresholded_frame * 255, keypoints);
+    
 
     // Mark the found blobs
     Mat marker = Mat::zeros(sourceImage.size(), CV_8UC3);;
@@ -206,11 +209,7 @@ bool VisionModule::_HandleSelection(vector<Point2d>& selections)
         return false;
     }
 
-    _points.push_back(Point2d(selectionX, selectionY));
-    if (_points.size() > 10)
-    {
-        _points.erase(_points.begin());
-    }
+    _lastPoint = Point2d(selectionX, selectionY);
 
     return true;
 }
@@ -218,6 +217,7 @@ bool VisionModule::_HandleSelection(vector<Point2d>& selections)
 void VisionModule::_VisionThread()
 {
     _sbd = SimpleBlobDetector::create();
+    _isDone = false;
 
     namedWindow("Corner Control");
     createTrackbar("LowH", "Corner Control", &cLowH, 255); //Hue (0 - 255)
@@ -269,13 +269,23 @@ void VisionModule::_VisionThread()
             cout << "Cannot read a frame from video stream\n";
         }
         
-        //Sleep for a time to allow other threads to execute
+        //Sleep for a time to allow other threads time
         waitKey(1);
-        this_thread::sleep_for(10ms);
+        this_thread::sleep_for(1ms);
     }
 
     // Release resources
     destroyAllWindows();
     _sbd.release();
-    _points.clear();
+    _mtx.lock();
+    _isDone = true;
+    _mtx.unlock();
+}
+
+bool VisionModule::IsThreadDone()
+{
+    _mtx.lock();
+    bool isDone = _isDone;
+    _mtx.unlock();
+    return isDone;
 }
