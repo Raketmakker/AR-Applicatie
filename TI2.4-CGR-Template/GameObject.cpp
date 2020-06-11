@@ -2,6 +2,8 @@
 #include "DrawComponent.h"
 #include "tigl.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include <stdio.h>
+#include <iostream>
 
 GameObject::GameObject()
 {

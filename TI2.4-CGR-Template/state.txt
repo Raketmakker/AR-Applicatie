@@ -1,0 +1,22 @@
+STATE Not_Started
+Tip
+
+STATE_PLACEMENT
+Plaatsen van boten:
+-Er wordt aangegeven welke boot je neerzet
+-Selecteer een veld en druk op 'Enter'
+x5
+
+STATE_PLAYERTURN
+-Tip: Selecteer een veld en druk op 'Enter' om te schieten
+-Textueel feedback raak of mis (evt)
+-Feedback als boot kapot
+
+STATE_AITURN
+-AI schiet
+-Text feedback als hij jouw boot kapot heeft gemaakt
+-Textueel feedback raak of mis (evt)
+
+STATE_GAMEOVER
+-textueel feedback wint of verliest
+-game over, daag

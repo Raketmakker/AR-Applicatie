@@ -182,6 +182,8 @@ GraphicModel::~GraphicModel(void)
 void GraphicModel::draw()
 {
 	tigl::begin(GL_TRIANGLES);
+	tigl::shader->enableColor(false);
+	tigl::shader->enableTexture(true);
 	for (auto& group : groups)
 	{
 		//  set material texture, if available
