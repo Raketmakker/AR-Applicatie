@@ -25,12 +25,11 @@ GameObject* logicObject;
 void init();
 void update();
 void draw();
-void VisionCallback(int x, int y);
 void game();
 
 int main(void)
 {
-    VisionModule visionModule(VisionCallback);
+    VisionModule visionModule;
     visionModule.Start();
 
     if (!glfwInit())

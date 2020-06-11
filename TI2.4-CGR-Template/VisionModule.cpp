@@ -1,6 +1,10 @@
+#define _USE_MATH_DEFINES
 #include "VisionModule.h"
 #include <thread>
 #include <chrono>
+#include <cmath>
+#include <map>
+#include <vector>
 
 constexpr auto KEYCODE_SPACE = 32;
 constexpr auto MARKER_SIZE = 25;
@@ -9,7 +13,7 @@ using namespace cv;
 using namespace std;
 using namespace chrono_literals;
 
-int Min_Area = 1, Max_Area = 100000, thresholdValue;
+int Min_Area = 1, Max_Area = 100000;
 
 int cLowH = 0;
 int cHighH = 20;
@@ -25,8 +29,8 @@ int sHighS = 255;
 int sLowV = 19;
 int sHighV = 255;
 
-VisionModule::VisionModule(callback_function callback) noexcept :
-    _callback(callback), _gridWidth(-1), _gridHeigth(-1), _gridStart(Point2d(-1, -1)), _isRunning(false)
+VisionModule::VisionModule():
+    _gridWidth(-1), _gridHeigth(-1), _gridStart(Point2d(-1, -1)), _isRunning(false)
 {
     _cap = cv::VideoCapture(0);  // 0 = Webcam, for the daheng camera increase the number by one until you find it
 
@@ -48,9 +52,47 @@ void VisionModule::Start()
     visionThread.detach();
 }
 
-void VisionModule::Stop()
+void VisionModule::Stop() 
 {
     _isRunning = false;
+}
+
+Point2d VisionModule::GetSelectionPos()
+{
+    if (_points.empty())
+    {
+        return Point2d(-1, -1);
+    }
+
+    map<int, int> occurringpoints;
+
+    for (Point2d point : _points)
+    {
+        int pointValue = point.x + (point.y * 100);
+        std::map<int, int>::iterator it = occurringpoints.find(pointValue);
+
+        if (it == occurringpoints.end())
+        {
+            occurringpoints.insert(pair<int, int>(pointValue, 0));
+        }
+        else 
+        {
+            it->second = it->second + 1;
+        }
+    }
+
+    int mostFrequentPoint = -101;
+    int mostFrequenPointAmount = 0;
+
+    for (auto const& pair : occurringpoints)
+    {
+        if (pair.second > mostFrequenPointAmount)
+        {
+            mostFrequenPointAmount = pair.second;
+            mostFrequentPoint = pair.first;
+        }
+    }
+    return Point2d(mostFrequentPoint%100, mostFrequentPoint/100);
 }
 
 Mat VisionModule::_SearchColourBlob(Mat sourceImage, Scalar lowerValue, Scalar upperValue, vector<Point2d>& blobs)
@@ -75,7 +117,6 @@ Mat VisionModule::_SearchColourBlob(Mat sourceImage, Scalar lowerValue, Scalar u
     // Search for  blobs
     vector<cv::KeyPoint> keypoints;
     _sbd->detect(thresholded_frame * 255, keypoints);
-    //cout << "Amount of select blobs: " << keypoints.size() << endl;
 
     // Mark the found blobs
     Mat marker = Mat::zeros(sourceImage.size(), CV_8UC3);;
@@ -83,8 +124,6 @@ Mat VisionModule::_SearchColourBlob(Mat sourceImage, Scalar lowerValue, Scalar u
     {
         float x = keypoint.pt.x;
         float y = keypoint.pt.y;
-
-        //cout << "X:" << x << " Y:" << y << endl;
 
         line(marker, Point(x - MARKER_SIZE, y - MARKER_SIZE), Point(x + MARKER_SIZE, y + MARKER_SIZE), Scalar(255, 0, 0), 2);
         line(marker, Point(x + MARKER_SIZE, y - MARKER_SIZE), Point(x - MARKER_SIZE, y + MARKER_SIZE), Scalar(255, 0, 0), 2);
@@ -95,69 +134,83 @@ Mat VisionModule::_SearchColourBlob(Mat sourceImage, Scalar lowerValue, Scalar u
     return marker;
 }
 
-bool VisionModule::_HandleCorners(vector<Point2d> corners)
+bool VisionModule::_HandleCorners(vector<Point2d>& corners)
 {
-    if (corners.size() != 4)    // Check if 4 corners are present
+    if (corners.size() != 2)    // Check if 4 corners are present
     {
+        cout << "Invalid amount of corners\n";
         return false;
     }
 
-    float smallestX = corners[0].x, largestX = corners[0].x;
-    float smallestY = corners[0].y, largestY = corners[0].y;
+    Point2d topLeft;
+    Point2d bottomRight;
 
-    for (Point2d corner : corners)  // Search for the minimum and maximum values of x and y
+    if (corners[0].x < corners[1].x)
     {
-        if (corner.x < smallestX)
-        {
-            smallestX = corner.x;
-        }
-        if (corner.x > largestX)
-        {
-            largestX = corner.x;
-        }
-        if (corner.y < smallestY)
-        {
-            smallestY = corner.y;
-        }
-        if (corner.y > largestY)
-        {
-            largestY = corner.y;
-        }
+        topLeft = corners[0];
+        bottomRight = corners[1];
+    }
+    else 
+    {
+        topLeft = corners[1];
+        bottomRight = corners[0];
     }
 
-    // Save grid information to class attributes
-    _gridStart = Point2d(smallestX, smallestY);
-    _gridWidth = largestX - smallestX;
-    _gridHeigth = largestY - smallestY;
+    //Calculate the distane between the 2 points
+    _gridDiameter = sqrt(pow(bottomRight.x - topLeft.x, 2) + pow(bottomRight.y - topLeft.y, 2));
 
-    //cout << "Grid is " << gridWidth << "x" << gridHeigth << " pixels\n";
-    //cout << "Grid starts at (" << gridStart.x << "," << gridStart.y << ")\n";
+    _gridWidth = sin(45.0 * (M_PI / 180.0)) * _gridDiameter;
+    _gridHeigth = cos(45.0 * (M_PI / 180.0)) * _gridDiameter;
+    _gridStart = topLeft;
+    _gridEnd = bottomRight;
 
     return true;
 }
 
-bool VisionModule::_HandleSelection(Point2d selection)
+bool VisionModule::_HandleSelection(vector<Point2d>& selections)
 {
-    //Check if the selection is within the grid
-    if (selection.x < _gridStart.x || selection.x > _gridStart.x + _gridWidth)
+    if (selections.size() != 1)
     {
-        cout << "VisionModule::HandleSelection: Selection not in grid\n";
+        cout << "Invalid amount of selections\n";
         return false;
     }
-    if (selection.y < _gridStart.y || selection.y > _gridStart.y + _gridHeigth)
-    {
-        cout << "VisionModule::HandleSelection: Selection not in grid\n";
-        return false;
-    }
+
+    Point2d selection = selections.front();
+
+    //Calculate other 2 points
+    double xc = (_gridStart.x + _gridEnd.x) / 2; double yc = (_gridStart.y + _gridEnd.y) / 2;    // Center point of grid
+    double xd = (_gridStart.x - _gridEnd.x) / 2; double yd = (_gridStart.y - _gridEnd.y) / 2;    // Half-diagonal from bottom left to top right
+
+    double x3 = xc - yd;  double y3 = yc + xd;    // Top right
+    double x4 = xc + yd;  double y4 = yc - xd;    // Bottom left
+    
+    //Calculate angles
+    double angle1 = atan((_gridStart.y - y4) / (_gridStart.x -x4)) * (180 / M_PI);                      //Calculate angle from point
+    double angle2 = atan((selection.y - _gridStart.y) / (selection.x - _gridStart.x)) * (180 / M_PI);   //Calculate angle from selection
+    double angle3 = angle1 - angle2;
+
+    //cout << "Angle 1: " << angle1 << " Angle 2: " << angle2 << " Angle 3: " << angle3 << "\n";
+
+    //Calculate difference between top left and selection
+    double distance = sqrt(pow(selection.x - _gridStart.x, 2) + pow(selection.y - _gridStart.y, 2));
 
     //Calculate the x and y values as a 10x10 grid
-    float cellWidth = _gridWidth / 10;
-    float cellheigth = _gridHeigth / 10;
+    int selectionX = (sin(angle3 * (M_PI / 180.0)) * distance) / (_gridWidth / 10);
+    int selectionY = (cos(angle3 * (M_PI / 180.0)) * distance) / (_gridHeigth / 10);
 
-    int selectionX = (selection.x - _gridStart.x) / cellWidth;
-    int selectionY = (selection.y - _gridStart.y) / cellheigth;
+    cout << selectionX << "," << selectionY << "\n";
 
-    _callback(selectionX, selectionY);
+    if (selectionX < 0 || selectionX > 9 || selectionY < 0 || selectionY > 9)
+    {
+        cout << "Selection out of bounds\n";
+        return false;
+    }
+
+    _points.push_back(Point2d(selectionX, selectionY));
+    if (_points.size() > 10)
+    {
+        _points.erase(_points.begin());
+    }
 
     return true;
 }
@@ -166,21 +219,21 @@ void VisionModule::_VisionThread()
 {
     _sbd = SimpleBlobDetector::create();
 
-    namedWindow("Control Corners");
-    createTrackbar("LowH", "Control Corners", &cLowH, 255); //Hue (0 - 255)
-    createTrackbar("HighH", "Control Corners", &cHighH, 255);
-    createTrackbar("LowS", "Control Corners", &cLowS, 255); //Saturation (0 - 255)
-    createTrackbar("HighS", "Control Corners", &cHighS, 255);
-    createTrackbar("LowV", "Control Corners", &cLowV, 255);//Value (0 - 255)
-    createTrackbar("HighV", "Control Corners", &cHighV, 255);
+    namedWindow("Corner Control");
+    createTrackbar("LowH", "Corner Control", &cLowH, 255); //Hue (0 - 255)
+    createTrackbar("HighH", "Corner Control", &cHighH, 255);
+    createTrackbar("LowS", "Corner Control", &cLowS, 255); //Saturation (0 - 255)
+    createTrackbar("HighS", "Corner Control", &cHighS, 255);
+    createTrackbar("LowV", "Corner Control", &cLowV, 255);//Value (0 - 255)
+    createTrackbar("HighV", "Corner Control", &cHighV, 255);
 
-    namedWindow("Control Select");
-    createTrackbar("LowH", "Control Select", &sLowH, 255); //Hue (0 - 255)
-    createTrackbar("HighH", "Control Select", &sHighH, 255);
-    createTrackbar("LowS", "Control Select", &sLowS, 255); //Saturation (0 - 255)
-    createTrackbar("HighS", "Control Select", &sHighS, 255);
-    createTrackbar("LowV", "Control Select", &sLowV, 255);//Value (0 - 255)
-    createTrackbar("HighV", "Control Select", &sHighV, 255);
+    namedWindow("Selection Control");
+    createTrackbar("LowH", "Selection Control", &sLowH, 255); //Hue (0 - 255)
+    createTrackbar("HighH", "Selection Control", &sHighH, 255);
+    createTrackbar("LowS", "Selection Control", &sLowS, 255); //Saturation (0 - 255)
+    createTrackbar("HighS", "Selection Control", &sHighS, 255);
+    createTrackbar("LowV", "Selection Control", &sLowV, 255);//Value (0 - 255)
+    createTrackbar("HighV", "Selection Control", &sHighV, 255);
 
     while (_isRunning)
     {
@@ -206,10 +259,7 @@ void VisionModule::_VisionThread()
 
             // Process position data
             _HandleCorners(cornerPoints);
-            if (selectionPoints.size() > 0)
-            {
-                _HandleSelection(selectionPoints[0]);
-            }
+            _HandleSelection(selectionPoints);
 
             imshow("Marked", marked_frame);
 
@@ -218,7 +268,7 @@ void VisionModule::_VisionThread()
         {
             cout << "Cannot read a frame from video stream\n";
         }
-
+        
         //Sleep for a time to allow other threads to execute
         waitKey(1);
         this_thread::sleep_for(10ms);
@@ -227,4 +277,5 @@ void VisionModule::_VisionThread()
     // Release resources
     destroyAllWindows();
     _sbd.release();
+    _points.clear();
 }
