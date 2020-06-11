@@ -1,18 +1,26 @@
 #include "LogicComponent.h"
 #include <stdio.h>
 
-LogicComponent::LogicComponent(GraphicMain* graphicmain)
+LogicComponent::LogicComponent(GraphicMain* graphicmain, VisionModule* visionmodule)
 {
 	gm = graphicmain;
 	gl = GameLogic(graphicmain);
 	gl.GameLogic_Init();
+
+	vm = visionmodule;
 }
+
 
 LogicComponent::~LogicComponent()
 {
 }
 
+Point2d selection;
 void LogicComponent::update(float elapsedTime) {
+
+	selection = vm->GetSelectionPos();
+	cout << "Logic: " << selection.x << ":" << selection.y << endl;
+
 	switch (gl.gamestate) {
 	case (GameState::STATE_NOT_STARTED):
 		stateNotStarted();
@@ -48,14 +56,20 @@ void LogicComponent::stateNotStarted()
 }
 void LogicComponent::statePlacement()
 {
-	if (glfwGetKey(gm->window, GLFW_KEY_UP) == GLFW_PRESS) {
+	/*if (glfwGetKey(gm->window, GLFW_KEY_UP) == GLFW_PRESS) {
 		counter++;
 		tempBoatCoords.x = (counter /100);
 		tempBoatCoords.y = (counter / 100);
 		if (counter > 1000) counter -= 1000;
 		cout << tempBoatCoords.x << ":" << tempBoatCoords.y << endl;
 		tempBoatB = Boat(tempBoatLength, tempBoatCoords);
-	}
+	}*/
+
+	//Changed coords
+
+	tempBoatCoords.x = selection.x;
+	tempBoatCoords.y = selection.y;
+	tempBoatB = Boat(tempBoatLength, tempBoatCoords);
 		
 
 	gm->text->setText({ "Place a red marker on the real playboard to place a ship.",
@@ -67,8 +81,6 @@ void LogicComponent::statePlacement()
 		//Check if boat overlaps
 
 		gm->setBoatPosition(tempBoat, tempBoatCoords.x, tempBoatCoords.y, tempBoatLength);
-
-
 
 		//Confirm location
 		if (glfwGetKey(gm->window, GLFW_KEY_ENTER) == GLFW_PRESS) {
@@ -106,14 +118,20 @@ void LogicComponent::statePlacement()
 }
 void LogicComponent::statePlayerTurn()
 {
-	if (glfwGetKey(gm->window, GLFW_KEY_UP) == GLFW_PRESS) {
+	/*if (glfwGetKey(gm->window, GLFW_KEY_UP) == GLFW_PRESS) {
 		counter++;
 		tempPinCoords.x = (counter / 100);
 		tempPinCoords.y = (counter / 100);
 		if (counter > 1000) counter -= 1000;
 		cout << tempPinCoords.x << ":" << tempPinCoords.y << endl;
 		gm->setPinPosition(tempPin, tempPinCoords.x, tempPinCoords.y, 1, 0);
-	}
+	}*/
+	//Changed coords
+
+	tempPinCoords.x = selection.x;
+	tempPinCoords.y = selection.y;
+
+	gm->setPinPosition(tempPin, tempPinCoords.x, tempPinCoords.y, 1, 0);
 
 	gm->text->setText({ "This is the Players turn.",
 						"Use your pionnetje to place your shot on the battlefield.",

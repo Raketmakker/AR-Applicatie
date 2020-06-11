@@ -50,7 +50,7 @@ int main(void)
 	graphicMain->setPinHit(pin2, 0);*/
 
 	logicObject = new GameObject();
-	logicObject->addComponent(new LogicComponent(graphicMain));
+	logicObject->addComponent(new LogicComponent(graphicMain,&visionModule));
 
     //std::thread first(game);
 

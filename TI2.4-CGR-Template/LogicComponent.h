@@ -1,14 +1,18 @@
 #pragma once
-
+#define _CRT_SECURE_NO_WARNINGS
 #include "Component.h"
 #include "GameLogic.h"
 #include "GraphicMain.h"
+#include "VisionModule.h"
+#include <opencv2/opencv.hpp>
 
 class LogicComponent : public Component
 {
 private:
 	GameLogic gl;
 	GraphicMain* gm;
+	VisionModule* vm;
+
 	GameObject* tempBoat;
 	int tempBoatLength;
 	bool tempBoatSpawned = false;
@@ -21,7 +25,7 @@ private:
 	GameObject* tempPin;
 
 public:
-	LogicComponent(GraphicMain* graphicmain);
+	LogicComponent(GraphicMain* graphicmain, VisionModule* visionmodule);
 	~LogicComponent();
 	virtual void update(float elapsedTime);
 

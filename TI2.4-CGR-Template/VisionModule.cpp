@@ -32,12 +32,12 @@ int sHighV = 255;
 VisionModule::VisionModule():
     _gridWidth(-1), _gridHeigth(-1), _gridStart(Point2d(-1, -1)), _isRunning(false)
 {
-    _cap = cv::VideoCapture(0);  // 0 = Webcam, for the daheng camera increase the number by one until you find it
+    _cap = cv::VideoCapture(2);  // 0 = Webcam, for the daheng camera increase the number by one until you find it
 
     if (_cap.isOpened())
     {
-        _cap.set(CV_CAP_PROP_FRAME_WIDTH, 1280);
-        _cap.set(CV_CAP_PROP_FRAME_HEIGHT, 960);
+        _cap.set(CV_CAP_PROP_FRAME_WIDTH, 1920);
+        _cap.set(CV_CAP_PROP_FRAME_HEIGHT, 1080);
     }
     else
     {
@@ -195,10 +195,10 @@ bool VisionModule::_HandleSelection(vector<Point2d>& selections)
     double distance = sqrt(pow(selection.x - _gridStart.x, 2) + pow(selection.y - _gridStart.y, 2));
 
     //Calculate the x and y values as a 10x10 grid
-    int selectionX = (sin(angle3 * (M_PI / 180.0)) * distance) / (_gridWidth / 10);
-    int selectionY = (cos(angle3 * (M_PI / 180.0)) * distance) / (_gridHeigth / 10);
+    int selectionX = (sin(angle3 * (M_PI / 180.0)) * distance) / (_gridWidth / 10)* -1;
+    int selectionY = (cos(angle3 * (M_PI / 180.0)) * distance) / (_gridHeigth / 10)* -1;
 
-    cout << selectionX << "," << selectionY << "\n";
+    //cout << "VisionModule: " << selectionX << "," << selectionY << "\n";
 
     if (selectionX < 0 || selectionX > 9 || selectionY < 0 || selectionY > 9)
     {
@@ -271,7 +271,7 @@ void VisionModule::_VisionThread()
         
         //Sleep for a time to allow other threads to execute
         waitKey(1);
-        this_thread::sleep_for(10ms);
+        this_thread::sleep_for(1ms);
     }
 
     // Release resources
