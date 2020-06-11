@@ -60,9 +60,6 @@
     <ClCompile Include="Line.cpp">
       <Filter>Source Files\GraphicsModule</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Cube.cpp">
       <Filter>Source Files\GraphicsModule</Filter>
     </ClCompile>
@@ -86,6 +83,9 @@
     </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicMain.cpp">
+      <Filter>Source Files\GraphicsModule</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

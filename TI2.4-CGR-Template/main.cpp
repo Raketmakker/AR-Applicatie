@@ -65,9 +65,14 @@ int main(void)
         glfwSwapBuffers(graphicsWindow);
 		glfwPollEvents();
 	}
+
 	visionModule.Stop();
 	glfwTerminate();
     gltTerminate();
+
+	while (!visionModule.IsThreadDone()) {
+		this_thread::sleep_for(1ms);
+	}
 
     return 0;
 }

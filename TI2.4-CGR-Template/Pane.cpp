@@ -10,6 +10,8 @@ Pane::Pane(float scale, std::string fileName, bool grounded)
 
 void Pane::draw()
 {
+	tigl::shader->enableTexture(true);
+	tigl::shader->enableColor(false);
 	this->texture->bind();
 	tigl::begin(GL_QUADS);
 	if (grounded)

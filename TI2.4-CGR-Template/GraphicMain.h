@@ -9,6 +9,7 @@
 #include <iostream>
 #include "Cube.h"
 #include "Text.h"
+#include "Pane.h"
 
 class GraphicMain
 {

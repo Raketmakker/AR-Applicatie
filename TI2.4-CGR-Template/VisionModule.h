@@ -5,6 +5,7 @@
 #include "opencv2/imgproc/imgproc.hpp"
 #include <iostream>
 #include <string>
+#include <mutex>
 #include <vector>
 
 using namespace cv;
@@ -27,8 +28,10 @@ private:
     float _gridDiameter;                 // The diameter of the grid
     Point2d _gridStart;                  // The upper left corner of the grid
     Point2d _gridEnd;                    // The lower right corner of the grid
-    vector<Point2d> _points;             // List of the last 10 points, used to make the the module more consistent
+    Point2d _lastPoint;                  // Most recent point found
     bool _isRunning;                     // Keeps track if the visionmodule is currently running 
+    bool _isDone;                        // Keeps track if the visionThread is finished
+    Mutex _mtx;                          // Used to keep _isDone thread safe when closing the program
 
     /**
         @brief Searches a given image for a specific colour
@@ -63,6 +66,7 @@ private:
     void _VisionThread();
 
 public:
+
     VisionModule();
     ~VisionModule() = default;
 
@@ -84,4 +88,7 @@ public:
         @return The most occuring point in the last, returns nothing if there arent any points yet
     */
     Point2d GetSelectionPos();
+
+    bool IsThreadDone();
+
 };

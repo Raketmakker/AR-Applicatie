@@ -21,7 +21,10 @@ void LogicComponent::update(float elapsedTime) {
 
 	selection = vm->GetSelectionPos();
 	sC = { (int)selection.x,(int)selection.y };
-	//cout << "Logic: " << selection.x << ":" << selection.y << endl;
+
+	if (selection.x == -1 || selection.y == -1) {
+		sC = { 0,0 };
+	}
 
 	switch (gl.gamestate) {
 	case (GameState::STATE_NOT_STARTED):

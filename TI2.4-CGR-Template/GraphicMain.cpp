@@ -22,6 +22,23 @@ void GraphicMain::init()
     this->gameObjects.push_back(textGameObject);
     drawGrid(0, 0);
     drawGrid(1, 0);
+
+    GameObject* bords = new GameObject();
+
+    bords->addComponent(new Pane(100, "pictures/PlayerBoard.png", 1));
+    bords->rotation = glm::vec3(0,glm::radians(90.0f),0);
+    bords->position = glm::vec3(100,gridHeight,-60);
+    bords->scale = glm::vec3(0.8f, 1, 2);
+
+    gameObjects.push_back(bords);
+
+    bords = new GameObject();
+    bords->addComponent(new Pane(100, "pictures/AIBoard.png", 1));
+    bords->rotation = glm::vec3(0, glm::radians(90.0f), 0);
+    bords->position = glm::vec3(100 + (gridSize * tileSize + tileSize), gridHeight, -60);
+    bords->scale = glm::vec3(0.8f, 1, 2);
+
+    gameObjects.push_back(bords);
 }
 
 //Draws the grid where the boats in sail
