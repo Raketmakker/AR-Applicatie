@@ -167,6 +167,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GraphicMain.cpp" />
     <ClCompile Include="GraphicModel.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="LogicComponent.cpp" />
     <ClCompile Include="main.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="gltext.h" />
     <ClInclude Include="GraphicMain.h" />
     <ClInclude Include="GraphicModel.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="LogicComponent.h" />
     <ClInclude Include="Pane.h" />

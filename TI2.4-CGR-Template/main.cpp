@@ -11,6 +11,7 @@
 #include <thread>
 #include "GameLogic.h"
 #include "LogicComponent.h"
+#include "Input.h"
 
 using namespace cv;
 
@@ -54,8 +55,11 @@ int main(void)
 
     //std::thread first(game);
 
+	Input::getInstance().init(graphicsWindow);
+
 	while (!glfwWindowShouldClose(graphicsWindow))
 	{
+		Input::getInstance().update();
         update();
 		draw();
         glfwSwapBuffers(graphicsWindow);

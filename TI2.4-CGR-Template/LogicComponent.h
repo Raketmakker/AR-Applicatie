@@ -5,6 +5,7 @@
 #include "GraphicMain.h"
 #include "VisionModule.h"
 #include <opencv2/opencv.hpp>
+#include "Input.h"
 
 class LogicComponent : public Component
 {

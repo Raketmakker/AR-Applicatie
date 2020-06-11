@@ -51,9 +51,8 @@ void LogicComponent::stateNotStarted()
 					   "Use 'SPACE' and 'SHIFT' to go up and down",
 					   "Use your mouse to look around",
 					   "Press 'Enter' to continue."});
-	if(glfwGetKey(gm->window, GLFW_KEY_ENTER) == GLFW_PRESS) {
+	if (Input::getInstance().isPressed(GLFW_KEY_ENTER)) {
 		gl.gamestate = GameState::STATE_PLACEMENT;
-
 	}
 }
 void LogicComponent::statePlacement()
@@ -76,7 +75,7 @@ void LogicComponent::statePlacement()
 		gm->setBoatPosition(tempBoat, tempBoatCoords.x, tempBoatCoords.y, tempBoatLength);
 
 		//Confirm location
-		if (glfwGetKey(gm->window, GLFW_KEY_ENTER) == GLFW_PRESS) {
+		if (Input::getInstance().isPressed(GLFW_KEY_ENTER)) {
 
 			if (!gl.getBordSpeler()->checkIfBoatOverlap(tempBoatB) && gl.getBordSpeler()->checkIfBoatIsInBounds(tempBoatB)) {
 				gl.getBordSpeler()->addBoat(tempBoatB);
@@ -125,7 +124,7 @@ void LogicComponent::statePlayerTurn()
 
 	gm->setPinPosition(tempPin, tempPinCoords.x, tempPinCoords.y, 1, 0);
 	
-	if (glfwGetKey(gm->window, GLFW_KEY_ENTER) == GLFW_PRESS) {
+	if (Input::getInstance().isPressed(GLFW_KEY_ENTER)) {
 		cout << "BORDAI" << endl;
 		gl.getBordAI()->printBord();
 		cout << "Bord Speler" << endl;
@@ -150,24 +149,22 @@ void LogicComponent::statePlayerTurn()
 				
 			gl.gamestate = GameState::STATE_AITURN;
 		}
-	}
-	
-	//Check if the game is over, if yes, go to gameover state
-	if (gl.checkIfGameIsOver()) {
-		gl.gamestate = GameState::STATE_GAMEOVER;
-	}
-	else 
-	{
-		tempPin = gm->firePin(0, 0, 0, 0);
-	}
 
+		//Check if the game is over, if yes, go to gameover state
+		if (gl.checkIfGameIsOver()) {
+			gl.gamestate = GameState::STATE_GAMEOVER;
+		}
+		else
+		{
+			tempPin = gm->firePin(0, 0, 0, 0);
+		}
+	}
 }
 
 int AIX, AIY;
 bool done = true;
 void LogicComponent::stateAITurn()
 {
-	gm->text->setText({ "AI Turn" });
 	bool looping = true;
 	while (looping) {
 		//Generate random coordinates
