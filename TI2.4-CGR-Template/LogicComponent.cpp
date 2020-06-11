@@ -5,7 +5,7 @@ LogicComponent::LogicComponent(GraphicMain* graphicmain, VisionModule* visionmod
 {
 	gm = graphicmain;
 	gl = GameLogic(graphicmain);
-	gl.GameLogic_Init();
+	srand(time(NULL));
 
 	vm = visionmodule;
 }
@@ -16,10 +16,12 @@ LogicComponent::~LogicComponent()
 }
 
 Point2d selection;
+coordinate sC;
 void LogicComponent::update(float elapsedTime) {
 
 	selection = vm->GetSelectionPos();
-	cout << "Logic: " << selection.x << ":" << selection.y << endl;
+	sC = { (int)selection.x,(int)selection.y };
+	//cout << "Logic: " << selection.x << ":" << selection.y << endl;
 
 	switch (gl.gamestate) {
 	case (GameState::STATE_NOT_STARTED):
@@ -56,15 +58,6 @@ void LogicComponent::stateNotStarted()
 }
 void LogicComponent::statePlacement()
 {
-	/*if (glfwGetKey(gm->window, GLFW_KEY_UP) == GLFW_PRESS) {
-		counter++;
-		tempBoatCoords.x = (counter /100);
-		tempBoatCoords.y = (counter / 100);
-		if (counter > 1000) counter -= 1000;
-		cout << tempBoatCoords.x << ":" << tempBoatCoords.y << endl;
-		tempBoatB = Boat(tempBoatLength, tempBoatCoords);
-	}*/
-
 	//Changed coords
 
 	tempBoatCoords.x = selection.x;
@@ -85,8 +78,8 @@ void LogicComponent::statePlacement()
 		//Confirm location
 		if (glfwGetKey(gm->window, GLFW_KEY_ENTER) == GLFW_PRESS) {
 
-			if (!gl.getBordAI()->checkIfBoatOverlap(tempBoatB) && gl.getBordAI()->checkIfBoatIsInBounds(tempBoatB)) {
-				gl.getBordAI()->addBoat(tempBoatB);
+			if (!gl.getBordSpeler()->checkIfBoatOverlap(tempBoatB) && gl.getBordSpeler()->checkIfBoatIsInBounds(tempBoatB)) {
+				gl.getBordSpeler()->addBoat(tempBoatB);
 				tempBoatSpawned = false;
 				cout << tempBoatCoords.x << ":" << tempBoatCoords.y << endl;
 			}
@@ -112,57 +105,137 @@ void LogicComponent::statePlacement()
 		else
 		{
 			//Next state
+			tempPin = gm->firePin(0, 0, 1, 0);
+
+			gm->text->setText({ "This is the Players turn.",
+						"Use your pionnetje to place your shot on the battlefield.",
+						"Press 'Enter' to fire and place your shot.",
+						"If your shot hits, it will become red, otherwise it will become blue." });
+			AIBordGeneration();
 			gl.gamestate = GameState::STATE_PLAYERTURN;
 		}
 	}
 }
 void LogicComponent::statePlayerTurn()
 {
-	/*if (glfwGetKey(gm->window, GLFW_KEY_UP) == GLFW_PRESS) {
-		counter++;
-		tempPinCoords.x = (counter / 100);
-		tempPinCoords.y = (counter / 100);
-		if (counter > 1000) counter -= 1000;
-		cout << tempPinCoords.x << ":" << tempPinCoords.y << endl;
-		gm->setPinPosition(tempPin, tempPinCoords.x, tempPinCoords.y, 1, 0);
-	}*/
 	//Changed coords
 
 	tempPinCoords.x = selection.x;
 	tempPinCoords.y = selection.y;
 
 	gm->setPinPosition(tempPin, tempPinCoords.x, tempPinCoords.y, 1, 0);
-
-	gm->text->setText({ "This is the Players turn.",
-						"Use your pionnetje to place your shot on the battlefield.",
-						"Press 'Enter' to fire and place your shot.",
-						"If your shot hits, it will become red, otherwise it will become blue."});
 	
-	if (tempPinSpawned) {
-		if (glfwGetKey(gm->window, GLFW_KEY_ENTER) == GLFW_PRESS) {
-
+	if (glfwGetKey(gm->window, GLFW_KEY_ENTER) == GLFW_PRESS) {
+		cout << "BORDAI" << endl;
+		gl.getBordAI()->printBord();
+		cout << "Bord Speler" << endl;
+		gl.getBordSpeler()->printBord();
+		if (gl.getBordAI()->checkIfGuessed(sC)) {
+			//gm->text->setText({ "This spot has already been guessed." });
 		}
+		else 
+		{
+			if (gl.getBordAI()->shootBoat(sC)) {
+					
+				gm->setPinHit(tempPin, 1);
+			}
+			else 
+			{
+				gm->setPinHit(tempPin, 0);
+			}
 
+			if (gl.getBordAI()->checkIfBoatWasDestroyed()) {
+				gm->text->setText({"Congrats, you destroyed a boat."});
+			}
+				
+			gl.gamestate = GameState::STATE_AITURN;
+		}
 	}
+	
+	//Check if the game is over, if yes, go to gameover state
+	if (gl.checkIfGameIsOver()) {
+		gl.gamestate = GameState::STATE_GAMEOVER;
+	}
+	else 
+	{
+		tempPin = gm->firePin(0, 0, 0, 0);
+	}
+
 }
+
+int AIX, AIY;
+bool done = true;
 void LogicComponent::stateAITurn()
 {
+	gm->text->setText({ "AI Turn" });
+	bool looping = true;
+	while (looping) {
+		//Generate random coordinates
+		AIX = rand() % 10;
+		AIY = rand() % 10;
+
+		if (!gl.getBordSpeler()->checkIfGuessed({ AIX,AIY })) {
+			gm->setPinPosition(tempPin, AIX, AIY, 0, 0);
+			if (gl.getBordSpeler()->shootBoat({ AIX,AIY })) {
+				gm->setPinHit(tempPin, 1);
+			}
+			else 
+			{
+				gm->setPinHit(tempPin, 0);
+			}
+			looping = false;
+		}
+	}
+	looping = true;
+
+	if (gl.getBordAI()->checkIfBoatWasDestroyed()) {
+		gm->text->setText({ "Yikes, the AI destroyed one of your boats." });
+	}
+	
+	gl.gamestate = GameState::STATE_PLAYERTURN;
+	//Check if the game is over, if yes, go to gameover state
+	if (gl.checkIfGameIsOver()) {
+		gl.gamestate = GameState::STATE_GAMEOVER;
+	}
+	else 
+	{
+		tempPin = gm->firePin(0, 0, 1, 0);
+	}
 }
 void LogicComponent::stateGameOver()
 {
+	if (gl.getBordAI()->checkIfDead()) {
+		gm->text->setText({ "You have won!",
+							"Congratulations!" });
+	}
+	else 
+	{
+		gm->text->setText({ "The AI has won!",
+							"You lost" });
+	}
 }
 
-void LogicComponent::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-	if (key == GLFW_KEY_UP && action == GLFW_PRESS)
-		tempBoatCoords.y++;
-	if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
-		tempBoatCoords.y--;
-	if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
-		tempBoatCoords.x++;
-	if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
-		tempBoatCoords.x--;
+void LogicComponent::AIBordGeneration() {
+	bool looping = true;
+	while (!gl.boatsAI.empty()) {
+		//Get last length and pop it out
+		tempBoatLength = gl.boatsAI.back();
+		gl.boatsAI.pop_back();
 
-	tempBoatB = Boat(tempBoatLength, tempBoatCoords);
-	cout << tempBoatCoords.x << ":" << tempBoatCoords.y << endl;
+		while (looping) {
+			//Generate random coordinates
+			AIX = rand() % 10;
+			AIY = rand() % 10;
+
+			tempBoatB = Boat(tempBoatLength, { AIX,AIY });
+
+			if (!gl.getBordAI()->checkIfBoatOverlap(tempBoatB) && gl.getBordAI()->checkIfBoatIsInBounds(tempBoatB)) {
+				gl.getBordAI()->addBoat(tempBoatB);
+				looping = false;
+			}
+		}
+		looping = true;
+		gl.getBordAI()->printBord();
+	}
+	gl.getBordAI()->printBord();
 }

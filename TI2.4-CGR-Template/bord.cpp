@@ -44,9 +44,6 @@ bool Bord::shootBoat(coordinate c) {
     guesses.push_back(c);
     if (findBoat(c)) {
         bord[c.x][c.y] = -2;
-        if (checkIfBoatWasDestroyed()) {
-            cout << "You destroyed a boat!" << endl;
-        }
         return true;
     }
     else {

@@ -19,8 +19,8 @@ private:
 	Boat tempBoatB = Boat(1, {0,0});
 	coordinate tempBoatCoords = { 0,0 };
 	double counter = 0;
+	int AIX, AIY;
 
-	bool tempPinSpawned = false;
 	coordinate tempPinCoords = { 0,0 };
 	GameObject* tempPin;
 
@@ -35,7 +35,6 @@ public:
 	void stateAITurn();
 	void stateGameOver();
 
-	void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
-
+	void AIBordGeneration();
 };
 

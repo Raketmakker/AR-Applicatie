@@ -24,7 +24,9 @@ private:
 public:
     GraphicMain* gm;
     GameState gamestate;
-    vector<int> boats = {5,4,3,3,2};
+    //vector<int> boats = {5,4,3,3,2};
+    vector<int> boats = {2};
+    vector<int> boatsAI = {3,2};
     GameLogic();
     GameLogic(GraphicMain* graphicMain);
     ~GameLogic();
@@ -39,6 +41,8 @@ public:
     void initBordAI();
 
     void printBords();
+
+    bool checkIfGameIsOver();
 
     virtual void update(float elapsedTime);
 

@@ -219,21 +219,21 @@ void VisionModule::_VisionThread()
 {
     _sbd = SimpleBlobDetector::create();
 
-    namedWindow("Corner Control");
-    createTrackbar("LowH", "Corner Control", &cLowH, 255); //Hue (0 - 255)
-    createTrackbar("HighH", "Corner Control", &cHighH, 255);
-    createTrackbar("LowS", "Corner Control", &cLowS, 255); //Saturation (0 - 255)
-    createTrackbar("HighS", "Corner Control", &cHighS, 255);
-    createTrackbar("LowV", "Corner Control", &cLowV, 255);//Value (0 - 255)
-    createTrackbar("HighV", "Corner Control", &cHighV, 255);
+    //namedWindow("Corner Control");
+    //createTrackbar("LowH", "Corner Control", &cLowH, 255); //Hue (0 - 255)
+    //createTrackbar("HighH", "Corner Control", &cHighH, 255);
+    //createTrackbar("LowS", "Corner Control", &cLowS, 255); //Saturation (0 - 255)
+    //createTrackbar("HighS", "Corner Control", &cHighS, 255);
+    //createTrackbar("LowV", "Corner Control", &cLowV, 255);//Value (0 - 255)
+    //createTrackbar("HighV", "Corner Control", &cHighV, 255);
 
-    namedWindow("Selection Control");
-    createTrackbar("LowH", "Selection Control", &sLowH, 255); //Hue (0 - 255)
-    createTrackbar("HighH", "Selection Control", &sHighH, 255);
-    createTrackbar("LowS", "Selection Control", &sLowS, 255); //Saturation (0 - 255)
-    createTrackbar("HighS", "Selection Control", &sHighS, 255);
-    createTrackbar("LowV", "Selection Control", &sLowV, 255);//Value (0 - 255)
-    createTrackbar("HighV", "Selection Control", &sHighV, 255);
+    //namedWindow("Selection Control");
+    //createTrackbar("LowH", "Selection Control", &sLowH, 255); //Hue (0 - 255)
+    //createTrackbar("HighH", "Selection Control", &sHighH, 255);
+    //createTrackbar("LowS", "Selection Control", &sLowS, 255); //Saturation (0 - 255)
+    //createTrackbar("HighS", "Selection Control", &sHighS, 255);
+    //createTrackbar("LowV", "Selection Control", &sLowV, 255);//Value (0 - 255)
+    //createTrackbar("HighV", "Selection Control", &sHighV, 255);
 
     while (_isRunning)
     {
@@ -271,7 +271,7 @@ void VisionModule::_VisionThread()
         
         //Sleep for a time to allow other threads to execute
         waitKey(1);
-        this_thread::sleep_for(1ms);
+        this_thread::sleep_for(10ms);
     }
 
     // Release resources
